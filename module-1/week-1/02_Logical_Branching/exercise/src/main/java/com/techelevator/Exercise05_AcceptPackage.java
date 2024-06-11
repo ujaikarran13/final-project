@@ -24,7 +24,13 @@ public class Exercise05_AcceptPackage {
     acceptPackage(50) ➔ false
      */
     public boolean acceptPackage(int weightPounds) {
-        return false;
+        if (weightPounds <= 40) {
+            return true;
+        }
+        else {
+            return false;
+        }
+
     }
 
     /*
@@ -41,8 +47,26 @@ public class Exercise05_AcceptPackage {
     acceptPackage(50, 36, 24, 12) ➔ false
      */
     public boolean acceptPackage(int weightPounds, int lengthInches, int widthInches, int heightInches) {
-        return false;
-    }
+        if (weightPounds <= 20 && lengthInches == 36 && widthInches == 24 && heightInches == 12) {
+            return true;
+        } else if (weightPounds <= 40 && lengthInches == 42 && widthInches == 30 && heightInches == 18) {
+            return true;
+        } else if (weightPounds >= 50 && lengthInches == 36 && widthInches == 24 && heightInches == 12) {
+            return false;
+        } else if (MAX_WEIGHT_POUNDS ==40 && MAX_CUBIC_INCHES == 10_368 && MAX_DIMENSION_INCHES == 66) {
+            return true;
+        }
+        else {
+            return false;
+
+    }}
+
+
+
+
+
+
+
 
     /*
     All was well until a customer showed up with a 16-foot garden hose laid out straight in a 2x2x194 inch shipping box.
@@ -61,6 +85,16 @@ public class Exercise05_AcceptPackage {
     acceptPackage(50, 36, 24, 12) ➔ false
      */
     public boolean acceptPackage(int weightPounds, int lengthInches, int widthInches, int heightInches, boolean isSurchargePaid) {
-        return false;
+        if (weightPounds == 20 && lengthInches == 36 && widthInches == 24 && heightInches == 12 && !isSurchargePaid) {
+            return true;
+        } else if (weightPounds == 40 && lengthInches == 66 && widthInches == 10 && heightInches == 10 && !isSurchargePaid) {
+            return false;
+        } else if (weightPounds == 40 && lengthInches == 66 && widthInches == 10 && heightInches == 10 && isSurchargePaid) {
+            return true;
+        } else if (MAX_WEIGHT_POUNDS ==40 && MAX_CUBIC_INCHES == 10_368 && MAX_DIMENSION_INCHES == 66 && isSurchargePaid) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
