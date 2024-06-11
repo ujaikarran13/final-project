@@ -18,7 +18,10 @@ public class Tutorial {
         /******************************************************************************/
         // Step 2: Calculate the sales tax and tip
         /******************************************************************************/
-
+        final double SALES_TAX_PERCENT = 7.5;
+        double taxAmount;
+        taxAmount = SALES_TAX_PERCENT / 100 * costOfDinner;
+        double tipAmount = tipPercent / 100 * costOfDinner;
 
 
 
