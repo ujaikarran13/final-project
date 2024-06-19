@@ -1,5 +1,7 @@
 package com.techelevator;
 
+import java.util.Scanner;
+
 public class Exercise03_Shirts {
 
     private final static char SMALL_TSHIRT = 'S';
@@ -17,8 +19,35 @@ public class Exercise03_Shirts {
     buildOrder() → ['S', 'S', 'S', 'M', 'M', 'L']
      */
     public char[] buildOrder() {
-        return new char[] {};    
+        int small, medium, large;
+        Scanner input = new Scanner(System.in);
+
+        System.out.print("Enter quantity of small shirts: ");
+        String smallQuantity = input.nextLine();
+        int quantitySmall = Integer.parseInt(smallQuantity);
+        System.out.print("Enter quantity of medium shirts: ");
+        String mediumQuantity = input.nextLine();
+        int quantityMedium = Integer.parseInt(mediumQuantity);
+        System.out.print("Enter quantity of large shirts: ");
+        String largeQuantity = input.nextLine();
+        int quantityLarge = Integer.parseInt(largeQuantity);
+
+        char[] output = new char[quantitySmall + quantityMedium + quantityLarge];
+        for (int i = 0; i < quantitySmall; i++) {
+            output[i] = 'S';
+        }
+
+        for (int i = 0; i < quantityMedium; i++) {
+            output[i + quantitySmall] = 'M';
+        }
+
+        for (int i = 0; i < quantityLarge; i++) {
+            output[i + quantitySmall + quantityMedium] = 'L';
+        }
+        return output;
+
     }
+
 
     /*
     Another customer called in and is hosting a large networking event and
@@ -36,9 +65,20 @@ public class Exercise03_Shirts {
     buildBulkOrder(4) → ['S', 'M', 'L', 'S']
     buildBulkOrder(0) → []
      */
-    public char[] buildBulkOrder(int numberOfShirts) { 
-        return new char[] {};    
+    public char[] buildBulkOrder(int numberOfShirts) {
+        char[] out = new char[numberOfShirts];
+        for (int i = 0; i < numberOfShirts; i++) {
+            if (i % 3 == 0) {
+                out[i] = 'S';
+            } else if (i % 3 == 1) {
+                out[i] = 'M';
+            } else {
+                out[i] = 'L';
+            }
+        }
+        return out;
     }
+
 
     /*
     The warehouse is out of small shirts and will only request more when the
@@ -54,6 +94,13 @@ public class Exercise03_Shirts {
     placeRequest([]) → false
      */
     public boolean placeRequest(char[] order) {
-        return false; 
+        for (int i = 0; i < order.length; i++) {
+            if (order[i] == 'S') {
+                return true;
+            }
+        }
+        return false;
     }
 }
+
+
