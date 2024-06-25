@@ -61,9 +61,7 @@ public class Exercises {
 	public String makeOutWord(String out, String word) {
 		String makeOutWord = "Yay";
 		String subString = "<<>>";
-		str.subString(i, j);
-
-		return out.substring(0,2) + makeOutWord + out.substring(2,4);
+			
 
 
 
@@ -78,11 +76,7 @@ public class Exercises {
 	 */
 	public String extraEnd(String str) {
 
-		String extraEnd = "Hello";
 
-		String result = str.substring(str.length() - 2);
-
-		return result + result + result;
 	}
 
 	/*
@@ -94,7 +88,7 @@ public class Exercises {
 	 firstTwo("ab") → "ab"
 	 */
 	public String firstTwo(String str) {
-		return str.length() > 2 ? str.substring(0, 2) : str;
+
 
 	}
 
@@ -105,7 +99,7 @@ public class Exercises {
 	 firstHalf("abcdef") → "abc"
 	 */
 	public String firstHalf(String str) {
-		return str.substring(1, str.length() - 1);
+
 	}
 
 	/*

@@ -19,32 +19,17 @@ public class Exercise03_Shirts {
     buildOrder() → ['S', 'S', 'S', 'M', 'M', 'L']
      */
     public char[] buildOrder() {
-        int small, medium, large;
-        Scanner input = new Scanner(System.in);
+        char[] Order = new char[6];
 
-        System.out.print("Enter quantity of small shirts: ");
-        String smallQuantity = input.nextLine();
-        int quantitySmall = Integer.parseInt(smallQuantity);
-        System.out.print("Enter quantity of medium shirts: ");
-        String mediumQuantity = input.nextLine();
-        int quantityMedium = Integer.parseInt(mediumQuantity);
-        System.out.print("Enter quantity of large shirts: ");
-        String largeQuantity = input.nextLine();
-        int quantityLarge = Integer.parseInt(largeQuantity);
+        char SMALL_TSHIRT1= 'S';
+        char SMALL_TSHIRT2 ='S';
+        char SMALL_TSHIRT3 ='S';
+        char MEDIUM_TSHIRT1='M';
+        char MEDIUM_TSHIRT2='M';
+        char LARGE_TSHIRT1 ='L';
 
-        char[] output = new char[quantitySmall + quantityMedium + quantityLarge];
-        for (int i = 0; i < quantitySmall; i++) {
-            output[i] = 'S';
-        }
 
-        for (int i = 0; i < quantityMedium; i++) {
-            output[i + quantitySmall] = 'M';
-        }
-
-        for (int i = 0; i < quantityLarge; i++) {
-            output[i + quantitySmall + quantityMedium] = 'L';
-        }
-        return output;
+        return Order;
 
     }
 
