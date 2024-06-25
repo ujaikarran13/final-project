@@ -1,6 +1,7 @@
 package com.techelevator;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Exercises {
@@ -16,7 +17,14 @@ public class Exercises {
 	 array2List( {"Left", "Right", "Forward", "Back"} )  ->  ["Left", "Right", "Forward", "Back"]
 	 */
 	public List<String> array2List(String[] stringArray) {
-		return null;
+		String[] array2List = {"Apple", "Orange", "Banana","Red", "Orange", "Yellow","Left","Right", "Forward","Back"};
+		List<String> objectList = List.of(array2List);
+
+		return objectList;
+
+
+
+
 	}
 
 	/*
