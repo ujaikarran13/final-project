@@ -62,15 +62,18 @@ public class Exercises {
 	 */
 	public double isItOnSale(Map<String, Double> itemsOnSale, String itemNumber) {
 
-		if (itemNumber == null || itemNumber.isEmpty() && itemNumber.equalsIgnoreCase(itemNumber)) {
-			return 0.00;
-		}
-		String normalizedItemNumber = itemNumber.toLowerCase();
-		Double discountPercentage = itemsOnSale.get(normalizedItemNumber);
+        Double discountPercentage;
+        if (itemNumber == null || itemNumber.isEmpty() && itemNumber.equalsIgnoreCase(itemNumber)) {
+            return 0.00;
 
-		return discountPercentage != null ? discountPercentage : 0.00;
+        } else {
+            String normalizedItemNumber = itemNumber.toLowerCase();
+            discountPercentage = itemsOnSale.get(normalizedItemNumber);
+        }
 
-	}
+        return discountPercentage != null ? discountPercentage : 0.00;
+
+    }
 
 	/*
 	 * Modify and return the given Map as follows: if "Peter" has more than 0 money, transfer half of it to "Paul",
