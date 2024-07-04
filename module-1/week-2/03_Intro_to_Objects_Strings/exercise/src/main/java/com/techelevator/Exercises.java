@@ -9,7 +9,7 @@ public class Exercises {
      helloName("X") → "Hello X!"
      */
 	public String helloName(String name) {
-		return name;
+		return "Hello" + name + "!";
 
 	}
 
