@@ -5,20 +5,45 @@ import java.util.Scanner;
 public class TempConvert {
 
 	public static void main(String[] args) {
-	Scanner input = new Scanner(System.in);
-	int freezingPoint = 32;
-	double CONVERSION_FACTOR = 9.0 / 5.0;
+		Scanner scanner = new Scanner(System.in);
+		System.out.print("Please enter the temperature: ");
+		double temperature = scanner.nextDouble();
 
-		double fahrenheitTemp;
-		int temperatureCelsius = 50;
+		System.out.print("Enter the scale Celsius(C) or Fahrenheit(F) ");
+		String scale = scanner.next();
 
-		fahrenheitTemp = temperatureCelsius * 1.8 + freezingPoint;
+		double convertedTemperature;
+		String originalScale, newScale;
 
-		System.out.println ("Celsius Temperature: " + temperatureCelsius);
-		System.out.println ("Fahrenheit Equivalent: " + fahrenheitTemp);
+		if (scale.equals("C")) {
+			convertedTemperature = celsiusToFahrenheit(temperature);
+			originalScale = "Celsius";
+			newScale = "Fahrenheit";
+		} else if (scale.equals("F")) {
+			convertedTemperature = fahrenheitToCelsius(temperature);
+			originalScale = "Fahrenheit";
+			newScale = "Celsius";
+		} else {
+			System.out.println("Invalid input. Please enter either C or F.");
+			return;
+		}
 
-
-
+		System.out.printf("%.0f %s is %.0f %s.\n", temperature, originalScale, Math.floor(convertedTemperature), newScale);
 	}
 
+
+	public static double celsiusToFahrenheit(double celsius) {
+		return celsius * 1.8 + 32;
+	}
+
+
+	public static double fahrenheitToCelsius(double fahrenheit) {
+		return (fahrenheit - 32) / 1.8;
+	}
 }
+
+
+
+
+
+

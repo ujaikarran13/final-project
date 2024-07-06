@@ -1,23 +1,29 @@
 package com.techelevator;
 
 import java.io.PrintStream;
+import java.util.Scanner;
 
 public class Fibonacci {
 
-	public static long fib(int n) {
-		if (n <= 1) return n;
-		else return fib(n-1) + fib(n-2);
-	}
 
 	public static void main(String[] args) {
-		int N = Integer.parseInt(args[0]);
+		Scanner input = new Scanner(System.in);
+		System.out.print("Please enter a number:");
+		String userInput = input.nextLine();
+        int firstNumber = 0;
+		int secondNumber = 1;
+		int lastNumber = Integer.parseInt(userInput);
+		System.out.println(firstNumber);
+		System.out.println(secondNumber);
 
-		System.out.println(fib(N));
+		while (firstNumber < 10){
 
-
-		for (int i = 1; i <= N; i++)
-			System.out.println(i + ": " + fib(i));
-
+			System.out.println(firstNumber + secondNumber);
+			int temporaryNumber = firstNumber;
+			int tempSecondNumber = secondNumber;
+			firstNumber = secondNumber;
+			secondNumber = tempSecondNumber + temporaryNumber;
+		}
 
 	}
 
