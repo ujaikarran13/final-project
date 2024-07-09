@@ -32,12 +32,6 @@ public class App {
 
         String[] dataset = Dataset.load();
 
-
-        List<String> titles = new ArrayList<>();
-        List<String> authors = new ArrayList<>();
-        List<Integer> publishedYears = new ArrayList<>();
-        List<BigDecimal> prices = new ArrayList<>();
-
            for (String data : dataset) {
                String[] parts = data.split(FIELD_DELIMITER);
 
@@ -122,8 +116,8 @@ public class App {
                         displaySearchResults(indexes);
 
                     } else if (searchBooksMenuSelection == 7) {// Search by price range
-                        double filterFromPrice= promptForPrice("Enter \"from\" price: ");
-                        double filterToPrice = promptForPrice("Enter \"to\" price: ");
+                        BigDecimal filterFromPrice= BigDecimal.valueOf(promptForPrice("Enter \"from\" price: "));
+                        BigDecimal filterToPrice = BigDecimal.valueOf(promptForPrice("Enter \"to\" price: "));
                         List<Integer> indexes = filterByPriceRange(filterFromPrice, filterToPrice);
                         displaySearchResults(indexes);
 
@@ -156,40 +150,37 @@ public class App {
     }
 
     private List<Integer> findMostRecentBooks(List<Integer> publishedYears) {
-        return null;
+
+        List <Integer> recentBooksIndexes = new ArrayList<>();
+
+        int mostRecentYear = Integer.MIN_VALUE;
+        for (int year : publishedYears) {
+           if (year > mostRecentYear){
+               mostRecentYear = year;
+            }
+        }
+        for (int i = 0; i < publishedYears.size(); i++) {
+            if (publishedYears.get(i) == mostRecentYear){
+                recentBooksIndexes.add(i);
+            }
+        }
+        return  recentBooksIndexes;
     }
     /*
         Requirement: 7a
         Add the `private List<Integer> findMostRecentBooks()` method.
         See README for additional details.
         */
-    private List<Integer> filterByPublishedYearRange(List<Integer> publishedYears) {
-        return null;
-    }
+
     /*
          Requirement: 6a
          Complete the `filterByPublishedYearRange()` method.
          See README for additional details.
          */
     private void displaySearchResults(List<Integer> indexes) {
-        List<String> titles = Arrays.asList("Exhalation", "The Story of Your Life and others", "The Hunger Games", "Piranesi", "Animal Farm", "Mother Night", "Humble Pi", "Things to Make and Do in the Fourth Dimension",
-                "The Future Was Here", "Racing the Beam", "10 PRINT CHR$(205.5+RND(1))", "Computability: Turing, Gö, Church, and Beyond", "Programming for the Puzzled", "ENIAC in Action",  "Once Upon an Algorithm",
-                "Spreadsheet Implementation Technology", "Going Postal", "Making Money", "Raising Steam", "Stranger in a Strange Land",  "The Moon is a Harsh Mistress", "Sailing to Byzantium",
-                "Nightwings", "Mission of Gravity", "Prince Valiant, Vol. 1: 1937-1938");
-
-        List<String> authors = Arrays.asList("Ted Chiang", "Ted Chiang", "Suzanne Collins", "Susanna Clarke", "George Orwell", "Kurt Vonnegut","Matt Parker", "Matt Parker", "Jimmy Maher", "Nick Montfort and Ian Bogost",
-               "Nick Montfort, Patsy Baudoin, et al.", "B. Jack Copeland, Carl J. Posy, et al.", "Srini Devadas", "Thomas Haigh, Mark Priestly, and Crispin Rope", "Martin Erwig", "Peter Sestoft", "Terry Pratchett",
-                "Terry Pratchett", "Terry Pratchett", "Robert A. Heinlein", "Robert A. Heinlein", "Robert Silverberg", "Robert Silverberg", "Hal Clement", "Hal Foster");
-        List<Integer> publicationYears = Arrays.asList(2019, 2007, 2008, 2020, 1945, 1961, 2019, 2015, 2012, 2009, 2012, 2015, 2017, 2016, 2017, 2014, 2004,2007, 2013, 1961, 1966, 1986, 1968, 1954, 2009);
-        List<Double> prices = Arrays.asList(14.68, 12.27, 19.95, 14.19, 19.84, 14.99, 14.28, 16.00, 24.95, 25.95, 35.00, 25.00, 25.00, 25.00, 29.95, 40.00, 9.99, 9.99, 16.95, 9.99, 15.99,20.37, 17.69, 18.63, 44.14);
 
         for (int index: indexes){
-            String title = titles.get(index);
-            String author = authors.get(index);
-            int year = publicationYears.get(index);
-            double price = prices.get(index);
-
-            System.out.printf(title, author, year, price);
+            System.out.println(titles.get(index) + ": "+ authors.get(index) + ": " + publishedYears.get(index) + ": $" + prices.get(index));
         }
 
     }
@@ -202,7 +193,15 @@ public class App {
 
 
     private List<Integer> filterByTitle(String filterTitle) {
-        return null;
+
+        List <Integer> titleIndexes = new ArrayList<>();
+        for (int i = 0; i < titles.size(); i++) {
+            if (titles.get(i).toLowerCase().contains(filterTitle.toLowerCase())){
+                titleIndexes.add(i);
+            }
+        }
+
+        return titleIndexes;
     }
     /*
         Requirement: 3a
@@ -211,7 +210,15 @@ public class App {
         */
 
     private List<Integer> filterByAuthor(String filterAuthor) {
-        return null;
+
+        List <Integer> authorIndexes = new ArrayList<>();
+        for (int i = 0; i < authors.size(); i++) {
+            if (authors.get(i).toLowerCase().contains(filterAuthor.toLowerCase())){
+                authorIndexes.add(i);
+            }
+        }
+
+        return authorIndexes;
     }
     /*
          Requirement: 4a
@@ -220,7 +227,14 @@ public class App {
          */
 
     private List<Integer> filterByPublishedYear(List<Integer> filterYear) {
-        return null;
+
+        List <Integer> yearIndexes = new ArrayList<>();
+        for (int i = 0; i < publishedYears.size(); i++) {
+            if (publishedYears.get(i).equals(filterYear)){
+                yearIndexes.add(i);
+            }
+        }
+        return yearIndexes;
     }
     /*
          Requirement: 5a
@@ -229,14 +243,31 @@ public class App {
          */
 
     private List<Integer> filterByPublishedYearRange(int filterFromYear, int filterToYear) {
-        return null;
+
+        List<Integer> yearFilteredIndexes = new ArrayList<>();
+        for (int i = 0; i < publishedYears.size(); i++) {
+            int year = publishedYears.get(i);
+            if (year >= filterFromYear && year <= filterToYear){
+                yearFilteredIndexes.add(i);
+            }
+        }
+        return yearFilteredIndexes;
     }
 
 
 
 
     private List<Integer> filterByPrice(double filterPrice) {
-        return null;
+
+        List <Integer> priceIndexes = new ArrayList<>();
+        for (int i = 0; i < prices.size(); i++) {
+            BigDecimal price = prices.get(i);
+            if (price.compareTo(price) == 0){
+                priceIndexes.add(i);
+            }
+        }
+
+        return priceIndexes;
     }
     /*
         Requirement: 8a
@@ -244,8 +275,18 @@ public class App {
         See README for additional details.
         */
 
-    private List<Integer> filterByPriceRange(double filterFromPrice, double filterToPrice) {
-        return null;
+    private List<Integer> filterByPriceRange(BigDecimal filterFromPrice, BigDecimal filterToPrice) {
+
+
+        List<Integer> priceFilteredIndexes = new ArrayList<>();
+
+        for (int i = 0; i < prices.size(); i++) {
+           BigDecimal price = prices.get(i);
+            if (price.compareTo(filterFromPrice) >= 0 && price.compareTo(filterToPrice) <= 0){
+                priceFilteredIndexes.add(i);
+            }
+        }
+        return priceFilteredIndexes;
     }
 /*
      Requirement: 9a
@@ -257,7 +298,17 @@ public class App {
      Add the `private List<Integer> findLeastExpensiveBooks()` method.
      See README for additional details.
      */
+    private List<Integer> findLeastExpensiveBooks(BigDecimal leastExpensive){
+        List <Integer> priceIndexes = new ArrayList<>();
+        for (int i = 0; i < prices.size(); i++) {
+            BigDecimal price = prices.get(i);
+            if (price.compareTo(leastExpensive) == 0){
+                priceIndexes.add(i);
+            }
+        }
+        return priceIndexes;
 
+    }
 
     // UI methods
 
