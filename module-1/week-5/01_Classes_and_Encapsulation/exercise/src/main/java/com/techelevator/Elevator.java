@@ -11,11 +11,10 @@ public class Elevator {
         this.isDoorOpen = false;
     }
     public boolean isDoorOpen(){
-        this.isDoorOpen = false;
-        return false;
+        return isDoorOpen;
     }
-    public void DoorOpen(){
-        this.isDoorOpen = true;
+    public void DoorOpen(boolean isOpen) {
+        this.isDoorOpen = isOpen;
     }
     public void closeDoor(){
         this.isDoorOpen = false;
