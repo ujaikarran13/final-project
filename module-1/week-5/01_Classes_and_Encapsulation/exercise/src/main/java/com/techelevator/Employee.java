@@ -3,28 +3,28 @@ package com.techelevator;
 
 public class Employee {
 
-    private int employeeID;
+    private int employeeId;
     private String firstName;
     private String lastName;
     private String department;
     private double annualSalary;
 
-    public Employee(int employeeID, String firstName, String lastName, double annualSalary) {
-        this.employeeID = employeeID;
+    public Employee(int employeeId, String firstName, String lastName, double annualSalary) {
+        this.employeeId = employeeId;
         this.firstName = firstName;
         this.lastName = lastName;
         this.annualSalary = annualSalary;
     }
 
     public Employee() {
-        this.employeeID = 0;
+        this.employeeId = 0;
         this.firstName = "";
         this.lastName = "";
         this.annualSalary = 0;
     }
 
-    public int getEmployeeID() {
-        return employeeID;
+    public int getEmployeeId() {
+        return employeeId;
     }
     public String getFirstName() {
         return firstName;
@@ -52,7 +52,7 @@ public class Employee {
 
 
     public String getFullName() {
-        return lastName + "," + firstName;
+        return lastName + ", " + firstName;
     }
 
     public void raiseSalary(double percent) {

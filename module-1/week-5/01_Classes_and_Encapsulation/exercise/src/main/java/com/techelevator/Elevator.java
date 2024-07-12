@@ -1,20 +1,17 @@
 package com.techelevator;
 
 public class Elevator {
-    private int currentFloor;
+    private int currentFloor = 1;
     private int numberOfFloors;
     private boolean isDoorOpen;
 
     public Elevator (int numberOfFloors){
         this.numberOfFloors = numberOfFloors;
-        this.currentFloor = 1;
-        this.isDoorOpen = false;
     }
     public boolean isDoorOpen(){
-        this.isDoorOpen = false;
-        return false;
+        return isDoorOpen;
     }
-    public void DoorOpen(){
+    public void openDoor () {
         this.isDoorOpen = true;
     }
     public void closeDoor(){

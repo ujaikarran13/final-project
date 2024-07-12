@@ -5,6 +5,10 @@ public class Television {
     private boolean isOn;
     private int currentChannel;
     private int currentVolume;
+    private static final int MIN_CHANNEL = 3;
+    private static final int MAX_CHANNEL = 18;
+    private static final int MIN_VOLUME = 0;
+    private static final int MAX_VOLUME = 10;
 
     public Television () {
         this.isOn = false;
@@ -28,30 +32,30 @@ public class Television {
     public void channelUp(){
         if (isOn){
             this.currentChannel++;
-            if(this.currentChannel > 18){
-                this.currentChannel = 3;
+            if(this.currentChannel > MAX_CHANNEL){
+                this.currentChannel = MIN_CHANNEL;
             }
         }
     }
         public void channelDown(){
         if(isOn){
             this.currentChannel--;
-            if(this.currentChannel < 3){
-                this.currentChannel = 18;
+            if(this.currentChannel < MIN_CHANNEL){
+                this.currentChannel = MAX_CHANNEL;
             }
         }
     }
         public void raiseVolume(){
-        if (isOn && this.currentVolume <10){
+        if (isOn && this.currentVolume <MAX_VOLUME){
             this.currentVolume++;
         }
     }
     public void lowerVolume(){
-        if (isOn && this.currentVolume > 0){
+        if (isOn && this.currentVolume > MIN_VOLUME){
             this.currentVolume--;
         }
 }
-    public boolean getIsOn(){
+    public boolean isOn(){
         return isOn;
     }
     public int getCurrentChannel(){
