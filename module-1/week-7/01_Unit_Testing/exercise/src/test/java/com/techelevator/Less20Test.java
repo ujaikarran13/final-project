@@ -2,6 +2,7 @@ package com.techelevator;
 
 import org.junit.Test;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class Less20Test {
@@ -25,14 +26,11 @@ public class Less20Test {
     }
     @Test
     public void testIsLessThanMultipleOf20_NotLessThanMultipleOf20(){
-        assertTrue(less20.isLessThanMultipleOf20(20), "20 is 1 less than a multiple of 20.");
-        assertTrue(less20.isLessThanMultipleOf20(21), "21 is 1 less than a multiple of 20.");
-        assertTrue(less20.isLessThanMultipleOf20(40), "40 is 1 less than a multiple of 20.");
-        assertTrue(less20.isLessThanMultipleOf20(41), "41 is 1 less than a multiple of 20.");
+        assertFalse(less20.isLessThanMultipleOf20(20), "20 is 1 less than a multiple of 20.");
+        assertFalse(less20.isLessThanMultipleOf20(21), "21 is 1 less than a multiple of 20.");
+        assertFalse(less20.isLessThanMultipleOf20(40), "40 is 1 less than a multiple of 20.");
+        assertFalse(less20.isLessThanMultipleOf20(41), "41 is 1 less than a multiple of 20.");
 
     }
-
-
-
 
 }
