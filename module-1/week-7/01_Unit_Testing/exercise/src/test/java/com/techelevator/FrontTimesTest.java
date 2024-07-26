@@ -16,6 +16,7 @@ public class FrontTimesTest {
     public void will_get_first3_Characters_fromAStringWith_3_ORLessCharacters() {
     assertEquals("These are the first 3 characters:", frontTimes.generateString("abc", 1), "abc");
 
+        assertEquals("abcabcabc", frontTimes.generateString("abcdefgh", 3), "abcabcabc");
     }
 
 
@@ -33,14 +34,11 @@ public class FrontTimesTest {
 
     }
     }
-
-
 // Arrange - since this is testing a constructor, there's nothing to set up
-
 // Act - call the constructor by creating a new object, passing valid parameters
-
-
 // Assert - verify the properties are set appropriately
+
+
 
 
 
