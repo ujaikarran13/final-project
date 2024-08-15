@@ -17,7 +17,10 @@ public class PracticePart1 {
 		Q01_removeFraction(8.0, 2.5) -> 3.0
 	*/
 	public double Q01_removeFraction(double numerator, double denominator) {
-		return 0;
+		double result = numerator/denominator;
+		result = (int) result;
+		return result;
+
 	}
 
 	/*
@@ -34,7 +37,14 @@ public class PracticePart1 {
 		Q02_isWaterTemperatureExtreme(212) -> true
 	*/
 	public boolean Q02_isWaterTemperatureExtreme(int temperature) {
+		final int FREEZING = 32;
+		final int BOILING = 212;
+
+		if (temperature <= FREEZING || temperature >= BOILING) {
+			return true;
+		}
 		return false;
+
 	}
 
 	/*
@@ -58,7 +68,15 @@ public class PracticePart1 {
 		Q03_isLeapYear(2019) -> false
 	*/
 	public boolean Q03_isLeapYear(int year) {
-		return false;
+
+		if (year %4 !=0 || (year % 100 == 0 && year % 400 !=0)){
+			return false;
+
+
+		}
+		else {
+			return true;
+		}
 	}
 
 	/*
@@ -79,6 +97,11 @@ public class PracticePart1 {
 		Q04_carWashPrice('P', true, true) -> 11
 	*/
 	public int Q04_carWashPrice(char typeOfWash, boolean isMorning, boolean isWeekend) {
+
+
+
+
+
 		return 0;
 	}
 
@@ -237,6 +260,17 @@ public class PracticePart1 {
 		 	-> {"Dog": 3, "Chicken": 1, "Fish": 1, "Cat": 2, "Dinosaur": 1, "Llama": 1}
 	*/
 	public Map<String, Integer> Q11_idealPets(String[] suggestedPets) {
-		return new HashMap<>();
+		Map<String, Integer> idealPets = new HashMap<>();
+		for (String pets : suggestedPets) {
+			if (idealPets.containsKey(pets)) {
+
+				int count = idealPets.get(pets);
+				idealPets.put(pets, count + 1);
+			} else {
+
+				idealPets.put(pets, 1);
+			}
+		}
+			return idealPets;
+		}
 	}
-}
