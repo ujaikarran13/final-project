@@ -3,7 +3,13 @@
 
 -- 1. Select name and description of all parks ordered by the park's establish date in descending order. (expected: 3 rows, starting with "Cuyahoga Valley")
 
+
+
+
+
+
 -- 2. For all parks, select the name and location as a single value that looks like this: "Park Name (Location)". (expected: 3 rows)
+
 
 -- 3. Select name and description of all parks in Ohio. (expected: 1 row)
 
@@ -30,8 +36,14 @@
 
 -- You need to get all the campgrounds in the park named 'Arches'. You can do this with the following two queries:
 -- 12. First, select the park id of the park with name 'Arches'. (expected: 1 row)
-
+SELECT park_id
+FROM park
+WHERE name = 'Arches';
 -- 13. Then, select the campground id and name of all the campgrounds for the park with the park_id you just selected. (expected: 3 rows)
+
+
+
+
 
 -- 14. Now, can you do the same work of the previous two queries in one query? 
 --		HINT: The first query will become a subquery of the second. (expected: 3 rows)
@@ -56,12 +68,23 @@
 -- 20. A group of primitive campers called, and they want you to list the site number for all sites which 
 --		don't allow RV's, aren't accessible, and don't have utilities. (expected: 14 rows)
 
--- 21. A physically challenged customer called, and you need to list the site number, max RV length, accessible and utilities 
---		for all sites which either allow RV's, or are both accessible and have utilities. (expected: 27 rows)
+-- 21. A physically challenged customer called, and you need to list the site number, 
+--     max RV length, accessible and utilities 
+--     for all sites which either allow RV's, or are both accessible and have utilities. (expected: 27 rows)
+SELECT site_number, max_rv_length, accessible, utilities
+FROM site
+WHERE max_rv_length >=1 OR accessible = true AND utilities = true;
 
--- 22. The customer from the previous call decided to take their RV, and is camping in February. List the campground id, site number and max RV length 
+-- 22. The customer from the previous call decided to take their RV, and is camping in February. 
+--	List the campground id, site number and max RV length 
 --		of all sites that allow RV's and are in a campground which is open in February. (expected: 8 rows)
--- 		HINT: Use a subquery to do this in a single SQL statement. The subquery should find all the campgrounds open in February.
+-- 		HINT: Use a subquery to do this in a single SQL statement. The subquery should find all the
+-- campgrounds open in February.
+SELECT campground_id, site_number, max_rv_length
+FROM site
+WHERE max_rv_length >=1 AND 
+
+
 
 
 -- RESERVATION TABLE

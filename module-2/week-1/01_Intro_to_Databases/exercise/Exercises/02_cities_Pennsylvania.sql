@@ -2,3 +2,8 @@
 -- Order the results in reverse alphabetical order (Z-A) by city name.
 -- (4 rows)
 
+SELECT city_name, area
+FROM city
+WHERE state_abbreviation = 'PA'
+ORDER BY city_name DESC;
+

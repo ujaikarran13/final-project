@@ -2,3 +2,7 @@
 -- Expected answer is around 8,300,000
 -- (1 row)
 
+select MAX(population) AS largest_city_population
+from city;
+ 
+

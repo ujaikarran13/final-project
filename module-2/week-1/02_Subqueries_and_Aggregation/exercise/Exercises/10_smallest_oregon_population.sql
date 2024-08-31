@@ -2,3 +2,6 @@
 -- Expected answer is around 100,000
 -- (1 row)
 
+select MIN(population) AS smallest_oregon_population
+from city
+where state_abbreviation = 'OR';

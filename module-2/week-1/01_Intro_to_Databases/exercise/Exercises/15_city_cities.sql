@@ -2,3 +2,7 @@
 -- Order the results by population, largest first.
 -- (11 rows)
 
+select city_name, state_abbreviation, population
+from city
+where city_name LIKE '%City%'
+order by population DESC;

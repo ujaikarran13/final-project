@@ -2,3 +2,6 @@
 -- Expected answer is around 3,900.
 -- (1 row)
 
+select AVG(area) AS average_park_area
+from park
+where has_camping = true;

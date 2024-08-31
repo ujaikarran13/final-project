@@ -2,3 +2,6 @@
 -- Expected answer is around 6,000,000
 -- (1 row)
 
+select AVG(population) AS average_population
+from state
+where census_region = 'West';
