@@ -2,3 +2,5 @@
 --     home_page to "No image" and their profile_path to NULL (64 rows)
 
 
+UPDATE person SET home_page = 'No image', profile_path = NULL
+WHERE birthday < '1900-01-01' AND (profile_path IS NULL OR profile_path NOT LIKE '%.jpg');
