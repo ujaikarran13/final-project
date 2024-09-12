@@ -5,7 +5,7 @@ import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
-
+import org.postgresql.util.PSQLException;
 import java.util.ArrayList;
 import java.util.List;
 

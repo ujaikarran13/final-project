@@ -16,7 +16,7 @@ import com.techelevator.projects.model.Department;
 public class JdbcDepartmentDao implements DepartmentDao {
 
 	private final String DEPARTMENT_SELECT = "SELECT d.department_id, d.name FROM department d ";
-	
+
 	private final JdbcTemplate jdbcTemplate;
 
 	public JdbcDepartmentDao(DataSource dataSource) {
@@ -39,31 +39,51 @@ public class JdbcDepartmentDao implements DepartmentDao {
 
 	@Override
 	public List<Department> getDepartments() {
-		List<Department> departments = new ArrayList<>();
+		List<Department> department = new ArrayList<>();
 		String sql = DEPARTMENT_SELECT;
 
 		SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
 		while (results.next()) {
-			departments.add(mapRowToDepartment(results));
+			department.add(mapRowToDepartment(results));
 		}
-		
-		return departments;
+
+		return department;
 	}
 
 	@Override
 	public Department createDepartment(Department department) {
-		throw new DaoException("createDepartment() not implemented");
+		int departmentId;
+		try {
+			String sql = "INSERT INTO department (department_id, name) VALUES (?, ?) RETURNING department_id;";
+			jdbcTemplate.queryForObject(sql, int.class, department.getId());
+		} catch (Exception e) {
+			throw new DaoException("Failed to insert department", e);
+		}
+		return department;
 	}
 
 	@Override
 	public Department updateDepartment(Department department) {
-		throw new DaoException("updateDepartment() not implemented");
+		try{
+			String sql = "UPDATE department SET name = ? WHERE department_id = ?";
+			jdbcTemplate.update(sql, department.getName(), department.getId());
+		} catch (Exception e){
+			throw new DaoException("Failed to update department", e);
+		}
+		return getDepartmentById(department.getId());
 	}
+
 
 	@Override
 	public int deleteDepartmentById(int id) {
-		throw new DaoException("updateDepartment() not implemented");
-	}
+        String sql;
+        try {
+            sql = "DELETE FROM department WHERE department_id = ?";
+        } catch (Exception e) {
+            throw new DaoException("Failed to delete department", e);
+        }
+        return jdbcTemplate.update(sql, id);
+    }
 
 	private Department mapRowToDepartment(SqlRowSet results) {
 		Department department = new Department();
