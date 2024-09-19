@@ -1,28 +1,28 @@
 Bug 1
 -----
-Test that demonstrates problem:
+Test that demonstrates problem: getTimesheetsByProjectId_with_valid_project_id_returns_list_of_all_timesheets_for_project
 
-Expected output:
+Expected output: The list should contain TIMESHEET_1
 
-Actual output:
+Actual output: Tests fail because TIMESHEET_1 is missing.
 
 How did you fix this bug?
 
 
 Bug 2
 -----
-Test that demonstrates problem:
+Test that demonstrates problem: createTimesheet_creates_timesheet
 
-Expected output:
+Expected output: 0
 
-Actual output:
+Actual output: 5
 
 How did you fix this bug?
 
 
 Bug 3
 -----
-Test that demonstrates problem:
+Test that demonstrates problem: getTimesheetsByEmployeeId_with_valid_employee_id_returns_list_of_all_timesheets_for_employee
 
 Expected output:
 
