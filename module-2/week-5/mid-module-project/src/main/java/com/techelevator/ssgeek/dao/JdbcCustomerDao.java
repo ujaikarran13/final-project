@@ -24,7 +24,7 @@ public class JdbcCustomerDao implements CustomerDao {
     @Override
     public Customer getCustomerById(int customerId) {
         Customer customer = null;
-        String sql = "SELECT customer_id, name, street_address1, street_address2, city, state, zip_code" + "FROM Customer WHERE customer_id = ?";
+        String sql = "SELECT customer_id, name, street_address1, street_address2, city, state, zip_code" + "FROM customer WHERE customer_id = ?";
         try {
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql, customerId);
             if (results.next()) {
@@ -40,7 +40,7 @@ public class JdbcCustomerDao implements CustomerDao {
     @Override
     public List<Customer> getCustomers() {
         List<Customer> customers = new ArrayList<>();
-        String sql = "SELECT * " + "FROM Customer";
+        String sql = "SELECT * " + "FROM customer";
         try {
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
             while (results.next()) {
@@ -59,7 +59,7 @@ public class JdbcCustomerDao implements CustomerDao {
     @Override
     public Customer createCustomer(Customer newCustomer) {
         Integer newId;
-        String sql = "INSERT INTO Customer (name, street_address1, street_address2, city, state, zip_code) " + "VALUES(? ,? ,? ,? ,? ,?) RETURNING customer_id";
+        String sql = "INSERT INTO customer (name, street_address1, street_address2, city, state, zip_code) " + "VALUES(? ,? ,? ,? ,? ,?) RETURNING customer_id";
         try {
             newId = jdbcTemplate.queryForObject(sql, int.class, newCustomer.getName(), newCustomer.getStreetAddress1(), newCustomer.getStreetAddress2(), newCustomer.getCity(), newCustomer.getState(), newCustomer.getZipCode());
 
@@ -73,11 +73,11 @@ public class JdbcCustomerDao implements CustomerDao {
 
     @Override
     public Customer updateCustomer(Customer updatedCustomer) {
-        String sql = "UPDATE Customer " + "SET name = ? , street_address1 = ?, street_address2 = ?, city = ?, state = ?, zip_code = ? " + "WHERE customer_id = ?";
+        String sql = "UPDATE customer " + "SET name = ? , street_address1 = ?, street_address2 = ?, city = ?, state = ?, zip_code = ? " + "WHERE customer_id = ?";
         try {
             int rowsAffected = jdbcTemplate.update(sql, updatedCustomer.getName(), updatedCustomer.getStreetAddress1(), updatedCustomer.getStreetAddress2(), updatedCustomer.getCity(), updatedCustomer.getState(), updatedCustomer.getZipCode());
             if (rowsAffected == 0) {
-                throw new DaoException("Zero rows affected, expected at least one");
+                throw new DaoException("Zero rows affected, expected atleast one");
             } else {
                 updatedCustomer = getCustomerById((updatedCustomer.getCustomerId()));
             }

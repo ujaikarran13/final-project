@@ -22,7 +22,7 @@ public class JdbcLineItemDao implements LineItemDao{
     @Override
     public List<LineItem> getLineItemsBySaleId(int saleId) {
         List<LineItem> lineItems = new ArrayList<>();
-        String sql = "SELECT * " + "FROM LineItem" + "WHERE sale_id = ?";
+        String sql = "SELECT * " + "FROM lineItem" + "WHERE sale_id = ?";
         try {
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql, saleId);
             while (results.next()) {

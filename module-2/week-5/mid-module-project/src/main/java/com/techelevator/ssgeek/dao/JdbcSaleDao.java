@@ -39,7 +39,7 @@ public class JdbcSaleDao implements SaleDao{
     @Override
     public List<Sale> getUnshippedSales() {
         List<Sale> sales = new ArrayList<>();
-        String sql = "SELECT * " + "FROM Sale" + "WHERE ship_date IS NULL";
+        String sql = "SELECT * " + "FROM sale" + "WHERE ship_date IS NULL";
         try {
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
             while (results.next()) {
@@ -58,7 +58,7 @@ public class JdbcSaleDao implements SaleDao{
     @Override
     public List<Sale> getSalesByCustomerId(int customerId) {
         List<Sale> sales = new ArrayList<>();
-        String sql = "SELECT * " + "FROM Sale" + "WHERE customer_id = ?";
+        String sql = "SELECT * " + "FROM sale" + "WHERE customer_id = ?";
         try {
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql, customerId);
             while (results.next()) {
@@ -77,7 +77,7 @@ public class JdbcSaleDao implements SaleDao{
     @Override
     public List<Sale> getSalesByProductId(int productId) {
         List<Sale> sales = new ArrayList<>();
-        String sql = "SELECT * " + "FROM Sale" + "WHERE product_id = ?";
+        String sql = "SELECT * " + "FROM sale" + "WHERE product_id = ?";
         try {
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql, productId);
             while (results.next()) {
@@ -96,7 +96,7 @@ public class JdbcSaleDao implements SaleDao{
     @Override
     public Sale createSale(Sale newSale) {
         Integer newId;
-        String sql = "INSERT INTO Sale (sale_id, customer_id, sale_date, ship_date) " + "VALUES(? ,? ,? ,?) RETURNING sale_id";
+        String sql = "INSERT INTO sale (sale_id, customer_id, sale_date, ship_date) " + "VALUES(? ,? ,? ,?) RETURNING sale_id";
         try {
             newId = jdbcTemplate.queryForObject(sql, int.class, newSale.getSaleId(), newSale.getCustomerId(), newSale.getSaleDate(), newSale.getShipDate());
 
@@ -110,7 +110,7 @@ public class JdbcSaleDao implements SaleDao{
 
     @Override
     public Sale updateSale(Sale updatedSale) {
-        String sql = "UPDATE Sale " + "SET customer_id = ? , sale_date = ?, ship_date = ? " + "WHERE sale_id = ?";
+        String sql = "UPDATE sale " + "SET customer_id = ? , sale_date = ?, ship_date = ? " + "WHERE sale_id = ?";
         try {
             int rowsAffected = jdbcTemplate.update(sql, updatedSale.getCustomerId(), updatedSale.getCustomerId(), updatedSale.getSaleDate(), updatedSale.getShipDate());
             if (rowsAffected == 0) {
@@ -129,7 +129,7 @@ public class JdbcSaleDao implements SaleDao{
     @Override
     public int deleteSaleById(int saleId) {
         int numberOfDelectedRows = 0;
-        String sql = "SELECT * " + "FROM Sale WHERE sale_id = ?";
+        String sql = "SELECT * " + "FROM sale WHERE sale_id = ?";
 
         try {
             numberOfDelectedRows = jdbcTemplate.update(sql, saleId);

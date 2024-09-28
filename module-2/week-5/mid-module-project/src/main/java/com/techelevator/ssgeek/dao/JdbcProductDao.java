@@ -21,7 +21,7 @@ public class JdbcProductDao implements ProductDao {
     @Override
     public Product getProductById(int productId) {
         Product product = null;
-        String sql = "SELECT product_id, name, description, price, image_name" + "FROM Product WHERE product_id = ?";
+        String sql = "SELECT product_id, name, description, price, image_name" + "FROM product WHERE product_id = ?";
         try {
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql, productId);
             if (results.next()) {
@@ -110,7 +110,7 @@ public class JdbcProductDao implements ProductDao {
     @Override
     public int deleteProductById(int productId) {
         int numberOfDelectedRows = 0;
-        String sql = "SELECT * " + "FROM product WHERE product_id = ?";
+        String sql = "SELECT FROM product WHERE product_id = ?";
 
         try {
             numberOfDelectedRows = jdbcTemplate.update(sql, productId);
