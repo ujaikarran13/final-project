@@ -24,16 +24,21 @@ public class AuctionController {
         this.auctionDao = new MemoryAuctionDao();
     }
     @RequestMapping( method = RequestMethod.GET)
-    public List<Auction> getAllAuctions(){
-        List<Auction> auctions = new ArrayList<>();
+    public List<Auction> list (@RequestParam(defaultValue = "") String title_like,
+                                       @RequestParam(defaultValue = "0") Double currentBid_lte){
 
-        try {
-            auctions = auctionDao.getAuctions();
+        List<Auction> list = new ArrayList<>();
+
+        if (currentBid_lte != 0 && !title_like.isEmpty()) {
+            return auctionDao.getAuctionsByTitleAndMaxBid(title_like, currentBid_lte);
         }
-        catch (Exception e){
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
+        else if (currentBid_lte != 0){
+           return auctionDao.getAuctionsByMaxBid(currentBid_lte);
         }
-        return auctions;
+        else if (!title_like.isEmpty()){
+            return auctionDao.getAuctionsByTitle(title_like);
+        }
+        return auctionDao.getAuctions();
     }
     @RequestMapping( path = "/{Id}", method = RequestMethod.GET)
     public Auction getAuctionById(@PathVariable int Id) {
@@ -49,7 +54,7 @@ public class AuctionController {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
         }
 
-        return auction;
+        return auctionDao.getAuctionById(Id);
     }
     @RequestMapping( method = RequestMethod.POST)
     public Auction addAuction(@RequestBody Auction newAuction) {
@@ -62,7 +67,7 @@ public class AuctionController {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
         }
 
-        return auction;
+        return auctionDao.createAuction(auction);
     }
     @RequestMapping( path = "/title", method = RequestMethod.GET)
     public List<Auction> getAuctionsByTitle(@RequestParam(defaultValue = "") String title_like){
@@ -74,6 +79,6 @@ public class AuctionController {
         catch (Exception e){
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
         }
-        return auctions;
+        return auctionDao.getAuctionsByTitle(title_like);
     }
 }
