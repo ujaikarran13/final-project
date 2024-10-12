@@ -1,11 +1,18 @@
 package com.techelevator.auctions.model;
 
+import org.springframework.lang.NonNull;
+import org.springframework.validation.annotation.Validated;
+
 public class Auction {
 
     private int id;
+
     private String title;
+
     private String description;
+
     private String user;
+
     private double currentBid;
 
     public Auction() {
