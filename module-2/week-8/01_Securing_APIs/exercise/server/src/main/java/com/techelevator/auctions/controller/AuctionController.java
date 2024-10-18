@@ -7,8 +7,6 @@ import com.techelevator.auctions.model.Auction;
 import org.springframework.http.*;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.ResourceAccessException;
-import org.springframework.web.client.RestClientResponseException;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
@@ -16,8 +14,8 @@ import java.security.Principal;
 import java.util.List;
 
 @RestController
-@RequestMapping("/auctions")
 @PreAuthorize("isAuthenticated()")
+@RequestMapping("/auctions")
 public class AuctionController {
 
     private AuctionDao auctionDao;
@@ -25,7 +23,7 @@ public class AuctionController {
     public AuctionController() {
         this.auctionDao = new MemoryAuctionDao();
     }
-
+@PreAuthorize("permitAll()")
     @RequestMapping(path = "", method = RequestMethod.GET)
     public List<Auction> list(@RequestParam(defaultValue = "") String title_like, @RequestParam(defaultValue = "0") double currentBid_lte) {
 
@@ -39,9 +37,9 @@ public class AuctionController {
         return auctionDao.getAuctions();
     }
 
-    @PostMapping
+
     @RequestMapping(path = "/{id}", method = RequestMethod.GET)
-    public Auction get(@RequestBody int id) {
+    public Auction get(@PathVariable int id) {
         Auction auction = auctionDao.getAuctionById(id);
         if (auction == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Auction Not Found");
@@ -49,16 +47,14 @@ public class AuctionController {
             return auction;
         }
     }
-
-    @PreAuthorize("hasRole('CREATOR') or hasRole('ADMIN')")
-    @PostMapping
+    @PreAuthorize("hasAnyRole('ADMIN', 'CREATOR')")
+    @ResponseStatus(HttpStatus.CREATED)
+    @RequestMapping(path = "", method = RequestMethod.POST)
     public Auction create(@Valid @RequestBody Auction auction) {
-
         return auctionDao.createAuction(auction);
     }
-
-    @PreAuthorize("hasRole('CREATOR') or hasRole('ADMIN')")
-    @PutMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'CREATOR')")
+    @RequestMapping(path = "/{id}", method = RequestMethod.PUT)
     public Auction update(@Valid @RequestBody Auction auction, @PathVariable int id) {
         // The id on the path takes precedence over the id in the request body, if any
 
@@ -70,21 +66,19 @@ public class AuctionController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Auction Not Found");
         }
     }
-
     @PreAuthorize("hasRole('ADMIN')")
-    @DeleteMapping("/{id}")
+   @ResponseStatus(HttpStatus.NO_CONTENT)
+   @RequestMapping(path = "/{id}", method = RequestMethod.DELETE)
     public void delete(@PathVariable int id) {
         auctionDao.deleteAuctionById(id);
     }
 
-    @PreAuthorize("hasRole('CREATOR') or hasRole('ADMIN')")
-    @ResponseStatus(HttpStatus.CREATED)
-    @RequestMapping(path = "/whoami")
-    public ResponseEntity<Auction> whoAmI(@Valid @RequestBody Auction auction, Principal principal) {
-        String username = principal.getName();
-        auction.getUser(username);
 
-        Auction newAuction = auctionDao.createAuction(auction);
-        return (ResponseEntity<Auction>) ResponseEntity.status(HttpStatus.CREATED);
+
+    @RequestMapping(path = "/whoami")
+    public String whoAmI(Principal principal) {
+        String username = principal.getName();
+
+        return username;
     }
 }
