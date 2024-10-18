@@ -19,7 +19,7 @@ import java.util.List;
 @RequestMapping("/auctions")
 @PreAuthorize("isAuthenticated()")
 public class AuctionController {
-    
+
     private AuctionDao auctionDao;
 
     public AuctionController() {
@@ -38,6 +38,7 @@ public class AuctionController {
 
         return auctionDao.getAuctions();
     }
+
     @PostMapping
     @RequestMapping(path = "/{id}", method = RequestMethod.GET)
     public Auction get(@RequestBody int id) {
@@ -75,19 +76,15 @@ public class AuctionController {
     public void delete(@PathVariable int id) {
         auctionDao.deleteAuctionById(id);
     }
+
     @PreAuthorize("hasRole('CREATOR') or hasRole('ADMIN')")
     @ResponseStatus(HttpStatus.CREATED)
     @RequestMapping(path = "/whoami")
     public ResponseEntity<Auction> whoAmI(@Valid @RequestBody Auction auction, Principal principal) {
-        Auction[] usernamers = null;
-        try {
-            ResponseEntity<Auction[]> response =
-                    restTemplate.exchange(API_BASE_URL, HttpMethod.GET, makeAuthEntity(), Auction[].class);
-            auctions = response.getBody();
-        } catch (RestClientResponseException | ResourceAccessException e) {
-            BasicLogger.log(e.getMessage());
-        }
-        return auctions;
+        String username = principal.getName();
+        auction.getUser(username);
 
+        Auction newAuction = auctionDao.createAuction(auction);
+        return (ResponseEntity<Auction>) ResponseEntity.status(HttpStatus.CREATED);
     }
 }
