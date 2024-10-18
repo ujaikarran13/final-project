@@ -45,7 +45,7 @@ public class Auction {
         return description;
     }
 
-    public String getUser() {
+    public String getUser(String username) {
         return user;
     }
 

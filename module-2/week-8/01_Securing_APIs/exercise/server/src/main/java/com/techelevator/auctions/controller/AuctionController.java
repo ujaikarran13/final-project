@@ -4,17 +4,22 @@ import com.techelevator.auctions.dao.AuctionDao;
 import com.techelevator.auctions.dao.MemoryAuctionDao;
 import com.techelevator.auctions.exception.DaoException;
 import com.techelevator.auctions.model.Auction;
-import org.springframework.http.HttpStatus;
+import org.springframework.http.*;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.ResourceAccessException;
+import org.springframework.web.client.RestClientResponseException;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.List;
 
 @RestController
 @RequestMapping("/auctions")
+@PreAuthorize("isAuthenticated()")
 public class AuctionController {
-
+    
     private AuctionDao auctionDao;
 
     public AuctionController() {
@@ -33,9 +38,9 @@ public class AuctionController {
 
         return auctionDao.getAuctions();
     }
-
+    @PostMapping
     @RequestMapping(path = "/{id}", method = RequestMethod.GET)
-    public Auction get(@PathVariable int id) {
+    public Auction get(@RequestBody int id) {
         Auction auction = auctionDao.getAuctionById(id);
         if (auction == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Auction Not Found");
@@ -44,15 +49,18 @@ public class AuctionController {
         }
     }
 
-    @ResponseStatus(HttpStatus.CREATED)
-    @RequestMapping(path = "", method = RequestMethod.POST)
+    @PreAuthorize("hasRole('CREATOR') or hasRole('ADMIN')")
+    @PostMapping
     public Auction create(@Valid @RequestBody Auction auction) {
+
         return auctionDao.createAuction(auction);
     }
 
-    @RequestMapping(path = "/{id}", method = RequestMethod.PUT)
+    @PreAuthorize("hasRole('CREATOR') or hasRole('ADMIN')")
+    @PutMapping("/{id}")
     public Auction update(@Valid @RequestBody Auction auction, @PathVariable int id) {
         // The id on the path takes precedence over the id in the request body, if any
+
         auction.setId(id);
         try {
             Auction updatedAuction = auctionDao.updateAuction(auction);
@@ -62,15 +70,24 @@ public class AuctionController {
         }
     }
 
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    @RequestMapping(path = "/{id}", method = RequestMethod.DELETE)
+    @PreAuthorize("hasRole('ADMIN')")
+    @DeleteMapping("/{id}")
     public void delete(@PathVariable int id) {
         auctionDao.deleteAuctionById(id);
     }
-
+    @PreAuthorize("hasRole('CREATOR') or hasRole('ADMIN')")
+    @ResponseStatus(HttpStatus.CREATED)
     @RequestMapping(path = "/whoami")
-    public String whoAmI() {
-        return "";
-    }
+    public ResponseEntity<Auction> whoAmI(@Valid @RequestBody Auction auction, Principal principal) {
+        Auction[] usernamers = null;
+        try {
+            ResponseEntity<Auction[]> response =
+                    restTemplate.exchange(API_BASE_URL, HttpMethod.GET, makeAuthEntity(), Auction[].class);
+            auctions = response.getBody();
+        } catch (RestClientResponseException | ResourceAccessException e) {
+            BasicLogger.log(e.getMessage());
+        }
+        return auctions;
 
+    }
 }
