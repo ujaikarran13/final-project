@@ -22,7 +22,7 @@ CREATE TABLE Facilities (
     Address VARCHAR(255) NOT NULL,
     PhoneNumber VARCHAR(15) NOT NULL,
     OfficeHours VARCHAR(100) NOT NULL,
-    CostPerHour DECIMAL(10, 2) NOT NULL
+    CostPerHour INT NOT NULL
 );
 
 -- Table for Doctor-Facility Association
