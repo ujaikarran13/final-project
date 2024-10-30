@@ -1,29 +1,5 @@
 -- database m2_final_project
 BEGIN TRANSACTION;
-
-
-CREATE TABLE physicians_office (
-    office_id INT PRIMARY KEY,
-    address VARCHAR,
-    phone_number VARCHAR,
-    from_hour INT,
-    to_hour INT
-);
-
-CREATE TABLE services (
-    services_id INT PRIMARY KEY,
-    service_description VARCHAR,
-    cost_per_hour INT
-);
-
-CREATE TABLE physician_availability (
-    physician_id INT PRIMARY KEY,
-    date_available DATE,
-	date_unavailable DATE
-);
-
-
-
 -- *************************************************************************************************
 -- Drop all db objects in the proper order
 -- *************************************************************************************************
@@ -32,7 +8,6 @@ DROP TABLE IF EXISTS users;
 -- *************************************************************************************************
 -- Create the tables and constraints
 -- *************************************************************************************************
-
 --users (name is pluralized because 'user' is a SQL keyword)
 CREATE TABLE users (
 	user_id SERIAL,
@@ -41,6 +16,34 @@ CREATE TABLE users (
 	role varchar(50) NOT NULL,
 	CONSTRAINT PK_user PRIMARY KEY (user_id)
 );
+-- Table for Facilities
+CREATE TABLE Facilities (
+    FacilityID INT AUTO_INCREMENT PRIMARY KEY,
+    Address VARCHAR(255) NOT NULL,
+    PhoneNumber VARCHAR(15) NOT NULL,
+    OfficeHours VARCHAR(100) NOT NULL,
+    CostPerHour DECIMAL(10, 2) NOT NULL
+);
+
+-- Table for Doctor-Facility Association
+CREATE TABLE DoctorFacilities (
+    DoctorID INT,
+    FacilityID INT,
+    PRIMARY KEY (DoctorID, FacilityID),
+    FOREIGN KEY (DoctorID) REFERENCES users(user_id),
+    FOREIGN KEY (FacilityID) REFERENCES Facilities(FacilityID)
+);
+
+-- Table for Availability Schedule
+CREATE TABLE Availability (
+    AvailabilityID INT AUTO_INCREMENT PRIMARY KEY,
+    DoctorID INT,
+    DayOfWeek ENUM('Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'),
+    StartTime TIME NOT NULL,
+    EndTime TIME NOT NULL,
+    FOREIGN KEY (DoctorID) REFERENCES users(user_id)
+);
+
 
 -- *************************************************************************************************
 -- Insert some sample starting data
@@ -55,20 +58,23 @@ VALUES
     ('admin','$2a$10$tmxuYYg1f5T0eXsTPlq/V.DJUKmRHyFbJ.o.liI1T35TFbjs2xiem','ROLE_ADMIN');
 
 
--- Inserting data into physicians_office
-INSERT INTO physicians_office (office_id, address, phone_number, from_hour, to_hour) VALUES
-(1, '123 Health St, Cityville', '555-1234', 9, 17),
-(2, '456 Wellness Ave, Townsville', '555-5678', 10, 18);
+-- Insert Facilities
+INSERT INTO Facilities (Address, PhoneNumber, OfficeHours, CostPerHour) VALUES
+('123 Health St, Wellness City', '555-1234', 'Mon-Fri: 9 AM - 5 PM', 150.00),
+('456 Care Ave, Health City', '555-5678', 'Mon-Fri: 10 AM - 6 PM', 200.00);
 
--- Inserting data into services
-INSERT INTO services (services_id, service_description, cost_per_hour) VALUES
-(1, 'General Consultation', 100),
-(2, 'Urgent Call', 150),
-(3, 'Drug Information Request', 80);
+-- Associate Doctors with Facilities
+INSERT INTO DoctorFacilities (DoctorID, FacilityID) VALUES
+(1, 1),  -- Doc Smith in Facility 1
+(2, 1),  -- Doc Jones in Facility 1
+(1, 2);  -- Doc Smith in Facility 2
 
--- Inserting data into staff_availability
-INSERT INTO physician_availability (physician_id, date_available, date_unavailable) VALUES
-(1, '2024-10-01', '2024-12-25'),
-(2, '2024-10-02', '2024-11-21'),
-(3, '2024-10-03', '2024-11-11');
+-- Insert Availability for Doctors
+INSERT INTO Availability (DoctorID, DayOfWeek, StartTime, EndTime) VALUES
+(1, 'Monday', '09:00:00', '17:00:00'),
+(1, 'Tuesday', '09:00:00', '17:00:00'),
+(2, 'Wednesday', '10:00:00', '18:00:00'),
+(2, 'Thursday', '10:00:00', '18:00:00'),
+(1, 'Friday', '09:00:00', '17:00:00');
+
 COMMIT TRANSACTION;
