@@ -26,14 +26,12 @@ List<Facility> getFacilities();
 
 
 
-List<Facility> getFacilitiesByAddress();
+    List<Facility> getFacilitiesByAddress(String address);
 
 
-List<Facility> getFacilitiesByOfficeHours();
+    List<Facility> getFacilitiesByOfficeHours(String officeHours);
 
-
-
-Facility updateFacility(Facility updatedFacility);
+    Facility updateFacility(Facility updatedFacility);
 
 
 

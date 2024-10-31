@@ -2,27 +2,31 @@ package com.techelevator.model;
 
 public class DoctorFacility {
 
-        private Long doctorId;
-        private Long facilityId;
+        private int doctorId;
+        private int facilityId;
 
-        public DoctorFacility(Long doctorId, Long facilityId) {
+        public DoctorFacility(int doctorId, int facilityId) {
             this.doctorId = doctorId;
             this.facilityId = facilityId;
         }
 
-        public Long getDoctorId() {
+    public DoctorFacility() {
+
+    }
+
+    public int getDoctorId() {
             return doctorId;
         }
 
-        public void setDoctorId(Long doctorId) {
+        public void setDoctorId(int doctorId) {
             this.doctorId = doctorId;
         }
 
-        public Long getFacilityId() {
+        public int getFacilityId() {
             return facilityId;
         }
 
-        public void setFacilityId(Long facilityId) {
+        public void setFacilityId(int facilityId) {
             this.facilityId = facilityId;
         }
     }

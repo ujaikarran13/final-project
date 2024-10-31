@@ -22,7 +22,8 @@ CREATE TABLE Facilities (
     Address VARCHAR(255) NOT NULL,
     PhoneNumber VARCHAR(15) NOT NULL,
     OfficeHours VARCHAR(100) NOT NULL,
-    CostPerHour INT NOT NULL
+    CostPerHour INT NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users(user_id)
 );
 
 -- Table for Doctor-Facility Association
@@ -30,15 +31,15 @@ CREATE TABLE DoctorFacilities (
     DoctorID INT,
     FacilityID INT,
     PRIMARY KEY (DoctorID, FacilityID),
-    FOREIGN KEY (DoctorID) REFERENCES users(user_id),
+    FOREIGN KEY (DoctorID) REFERENCES Availability(DoctorID),
     FOREIGN KEY (FacilityID) REFERENCES Facilities(FacilityID)
 );
 
 -- Table for Availability Schedule
 CREATE TABLE Availability (
-    AvailabilityID INT AUTO_INCREMENT PRIMARY KEY,
+    AvailabilityID INT PRIMARY KEY,
     DoctorID INT,
-    DayOfWeek ENUM('Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'),
+    DayOfWeek VARCHAR,
     StartTime TIME NOT NULL,
     EndTime TIME NOT NULL,
     FOREIGN KEY (DoctorID) REFERENCES users(user_id)

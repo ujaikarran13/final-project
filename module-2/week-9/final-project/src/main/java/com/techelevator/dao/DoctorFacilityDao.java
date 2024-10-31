@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface DoctorFacilityDao {
 
-    List<DoctorFacility> getDoctorsAndFacilities();
 
 
+    List<DoctorFacility> getDoctorsAndFacilities(int DoctorID, int FacilityID);
 }

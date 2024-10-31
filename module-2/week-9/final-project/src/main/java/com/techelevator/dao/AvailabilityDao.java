@@ -4,6 +4,11 @@ import com.techelevator.model.Availability;
 
 public interface AvailabilityDao {
 
-    Availability getAvailabilityById (int doctorId);
 
+
+    static Availability getDoctorAvailabilityById(int doctorId);
+
+    Availability getDoctorAvailabilityByDayOfWeek(String dayOfWeek);
+
+    Availability updateDoctorAvailability(Availability updatedAvailability);
 }

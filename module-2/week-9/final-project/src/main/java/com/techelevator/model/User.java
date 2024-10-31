@@ -2,7 +2,10 @@ package com.techelevator.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * Model class representing an application user.
@@ -17,14 +20,19 @@ public class User {
    @JsonIgnore
    private String hashedPassword;
    private String role;
-
-   public User() { }
+private Set<Authority> authorities = new HashSet<>();
+  @JsonIgnore
+  private boolean activated;
+   public User() {
+      this.activated = true;
+   }
 
    public User(int id, String username, String hashedPassword, String role) {
       this.id = id;
       this.username = username;
       this.hashedPassword = hashedPassword;
       this.role = role;
+      this.activated = true;
    }
 
    public User(String username, String hashedPassword, String role) {
@@ -90,4 +98,6 @@ public class User {
               ", role='" + role + '\'' +
               '}';
    }
+
 }
+
