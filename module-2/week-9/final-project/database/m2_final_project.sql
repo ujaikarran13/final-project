@@ -16,36 +16,41 @@ CREATE TABLE users (
 	role varchar(50) NOT NULL,
 	CONSTRAINT PK_user PRIMARY KEY (user_id)
 );
--- Table for Facilities
-CREATE TABLE Facilities (
-    FacilityID INT AUTO_INCREMENT PRIMARY KEY,
-    Address VARCHAR(255) NOT NULL,
-    PhoneNumber VARCHAR(15) NOT NULL,
-    OfficeHours VARCHAR(100) NOT NULL,
-    CostPerHour INT NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES users(user_id)
+-- Table for Facilities/Doctors Offices
+CREATE TABLE facilities (
+    facility_id SERIAL PRIMARY KEY,
+    facility_name VARCHAR(200) NOT NULL,
+    address VARCHAR(255) NOT NULL,
+    phone_number VARCHAR(15) NOT NULL,
+    cost_per_hour INT NOT NULL
+);
+CREATE TABLE doctors (
+    doctor_id SERIAL PRIMARY KEY,
+    user_id INT NOT NULL,
+    facility_id INT NOT NULL,
+    specialty VARCHAR(100),
+    FOREIGN KEY (user_id) REFERENCES users(user_id),
+    FOREIGN KEY (facility_id) REFERENCES facilities(facility_id)
 );
 
--- Table for Doctor-Facility Association
-CREATE TABLE DoctorFacilities (
-    DoctorID INT,
-    FacilityID INT,
-    PRIMARY KEY (DoctorID, FacilityID),
-    FOREIGN KEY (DoctorID) REFERENCES Availability(DoctorID),
-    FOREIGN KEY (FacilityID) REFERENCES Facilities(FacilityID)
+CREATE TABLE availability (
+    availability_id SERIAL PRIMARY KEY,
+    doctor_id INT NOT NULL,
+    day_of_week VARCHAR(20) NOT NULL,
+    start_time TIME NOT NULL,
+    end_time TIME NOT NULL,
+    FOREIGN KEY (doctor_id) REFERENCES doctors(doctor_id)
 );
-
--- Table for Availability Schedule
-CREATE TABLE Availability (
-    AvailabilityID INT PRIMARY KEY,
-    DoctorID INT,
-    DayOfWeek VARCHAR,
-    StartTime TIME NOT NULL,
-    EndTime TIME NOT NULL,
-    FOREIGN KEY (DoctorID) REFERENCES users(user_id)
+CREATE TABLE appointments (
+    appointment_id SERIAL PRIMARY KEY,
+    patient_id INT NOT NULL,
+    doctor_id INT NOT NULL,
+    appointment_date DATE NOT NULL,
+    appointment_time TIME NOT NULL,
+    status VARCHAR(20) NOT NULL CHECK (status IN ('scheduled', 'completed', 'canceled')),
+    FOREIGN KEY (patient_id) REFERENCES users(user_id),
+    FOREIGN KEY (doctor_id) REFERENCES doctors(doctor_id)
 );
-
-
 -- *************************************************************************************************
 -- Insert some sample starting data
 -- *************************************************************************************************
@@ -58,24 +63,25 @@ VALUES
     ('user', '$2a$10$tmxuYYg1f5T0eXsTPlq/V.DJUKmRHyFbJ.o.liI1T35TFbjs2xiem','ROLE_USER'),
     ('admin','$2a$10$tmxuYYg1f5T0eXsTPlq/V.DJUKmRHyFbJ.o.liI1T35TFbjs2xiem','ROLE_ADMIN');
 
+INSERT INTO facilities (facility_name, address, phone_number, cost_per_hour) VALUES
+('City Health Clinic', '123 Main St, Springfield, IL 62701', '555-1111', 100),
+('Downtown Medical Center', '456 Elm St, Springfield, IL 62702', '555-2222', 150);
 
--- Insert Facilities
-INSERT INTO Facilities (Address, PhoneNumber, OfficeHours, CostPerHour) VALUES
-('123 Health St, Wellness City', '555-1234', 'Mon-Fri: 9 AM - 5 PM', 150.00),
-('456 Care Ave, Health City', '555-5678', 'Mon-Fri: 10 AM - 6 PM', 200.00);
+INSERT INTO doctors (user_id, facility_id, specialty) VALUES
+(2, 1, 'General Practice'),
+(3, 2, 'Pediatrics');
 
--- Associate Doctors with Facilities
-INSERT INTO DoctorFacilities (DoctorID, FacilityID) VALUES
-(1, 1),  -- Doc Smith in Facility 1
-(2, 1),  -- Doc Jones in Facility 1
-(1, 2);  -- Doc Smith in Facility 2
-
--- Insert Availability for Doctors
-INSERT INTO Availability (DoctorID, DayOfWeek, StartTime, EndTime) VALUES
+INSERT INTO availability (doctor_id, day_of_week, start_time, end_time) VALUES
 (1, 'Monday', '09:00:00', '17:00:00'),
-(1, 'Tuesday', '09:00:00', '17:00:00'),
-(2, 'Wednesday', '10:00:00', '18:00:00'),
-(2, 'Thursday', '10:00:00', '18:00:00'),
-(1, 'Friday', '09:00:00', '17:00:00');
+(1, 'Wednesday', '09:00:00', '17:00:00'),
+(2, 'Tuesday', '10:00:00', '18:00:00'),
+(2, 'Thursday', '10:00:00', '18:00:00');
+
+INSERT INTO appointments (patient_id, doctor_id, appointment_date, appointment_time, status) VALUES
+(1, 1, '2024-11-01', '10:00:00', 'scheduled'),
+(1, 2, '2024-11-03', '14:00:00', 'scheduled'),
+(1, 1, '2024-11-05', '11:00:00', 'canceled');
+
+
 
 COMMIT TRANSACTION;

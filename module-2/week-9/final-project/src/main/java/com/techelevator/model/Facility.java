@@ -3,16 +3,16 @@ package com.techelevator.model;
 public class Facility {
 
         private int facilityId;
+        private String facilityName;
         private String address;
         private String phoneNumber;
-        private String officeHours;
         private int costPerHour;
 
-        public Facility(int facilityId, String address, String phoneNumber, String officeHours, int costPerHour) {
+        public Facility(int facilityId, String facilityName, String address, String phoneNumber, int costPerHour) {
             this.facilityId = facilityId;
+            this.facilityName = facilityName;
             this.address = address;
             this.phoneNumber = phoneNumber;
-            this.officeHours = officeHours;
             this.costPerHour = costPerHour;
         }
 
@@ -27,7 +27,13 @@ public class Facility {
         public void setFacilityId(int facilityId) {
             this.facilityId = facilityId;
         }
+    public String getFacilityName() {
+        return facilityName;
+    }
 
+    public void setFacilityName(String facilityName) {
+        this.facilityName = facilityName;
+    }
         public String getAddress() {
             return address;
         }
@@ -42,14 +48,6 @@ public class Facility {
 
         public void setPhoneNumber(String phoneNumber) {
             this.phoneNumber = this.phoneNumber;
-        }
-
-        public String getOfficeHours() {
-            return officeHours;
-        }
-
-        public void setOfficeHours(String officeHours) {
-            this.officeHours = officeHours;
         }
 
         public int getCostPerHour() {

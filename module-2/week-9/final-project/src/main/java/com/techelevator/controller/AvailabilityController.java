@@ -1,9 +1,9 @@
 package com.techelevator.controller;
 
+import com.techelevator.dao.AvailabilityDao;
+import com.techelevator.dao.JdbcAvailabilityDao;
 import com.techelevator.exception.DaoException;
 import com.techelevator.model.Availability;
-import com.techelevator.model.Facility;
-import com.techelevator.service.PhysiciansOfficeService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -17,49 +17,28 @@ import java.util.List;
 @RestController
 @CrossOrigin
 @PreAuthorize("isAuthenticated()")
-@RequestMapping( path = "/availability" )
+
 public class AvailabilityController {
+    private AvailabilityDao availabilityDao;
 
-private PhysiciansOfficeService physiciansOfficeService;
-
-public AvailabilityController(PhysiciansOfficeService physiciansOfficeService){
-    this.physiciansOfficeService = physiciansOfficeService;
-}
+    public AvailabilityController(AvailabilityDao availabilityDao) {
+        this.availabilityDao = new JdbcAvailabilityDao();
+    }
 
     @PreAuthorize("hasRole('ROLE_USER')")
-    @RequestMapping( path = "/availability", method = RequestMethod.GET )
-    public List<Availability> viewAvailability() {
+    @RequestMapping(path = "/viewavailability", method = RequestMethod.GET)
+    public List<Availability> getDoctorAvailabilityByDayOfWeek(@RequestParam(defaultValue = "") String weekday_like){
         List<Availability> availabilities = new ArrayList<>();
-
         try {
-            availabilities = PhysiciansOfficeService.viewAvailability();
+            availabilities = availabilityDao.getDoctorAvailabilityByDayOfWeek(weekday_like);
         }
-        catch (DaoException e) {
+        catch (Exception e){
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
         }
-
-        return availabilities;
+        return availabilityDao.getDoctorAvailabilityByDayOfWeek(weekday_like);
     }
-
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @RequestMapping( path = "/availability", method = RequestMethod.PUT )
-    public Availability updateAvailability(@PathVariable int DoctorID, @Valid @RequestBody Availability modifiedAvailability, Principal principal) {
-        Availability availability = null;
-
-        try {
-            // Make sure the doctor id is set
-            modifiedAvailability.setDoctorId(DoctorID);
-            availability = PhysiciansOfficeService.updateAvailability(modifiedAvailability, principal);
-            if (availability == null) {
-                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Facility not found");
-            }
-        }
-        catch (DaoException e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
-        }
-
-        return availability;
-
-    }
-
 }
+
+
+
+

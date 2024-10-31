@@ -2,13 +2,12 @@ package com.techelevator.dao;
 
 import com.techelevator.model.Availability;
 
+import java.util.List;
+
 public interface AvailabilityDao {
 
 
+    List<Availability> getDoctorAvailabilityByDayOfWeek (String dayOfWeek);
 
-    static Availability getDoctorAvailabilityById(int doctorId);
-
-    Availability getDoctorAvailabilityByDayOfWeek(String dayOfWeek);
-
-    Availability updateDoctorAvailability(Availability updatedAvailability);
+    List<Availability> getAvailabilities();
 }
