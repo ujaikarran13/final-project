@@ -4,6 +4,7 @@ package com.techelevator.controller;
 import com.techelevator.dao.FacilityDao;
 import com.techelevator.dao.JdbcFacilityDao;
 import com.techelevator.exception.DaoException;
+import com.techelevator.model.Availability;
 import com.techelevator.model.Facility;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -31,50 +32,48 @@ public class FacilityController {
 
     private FacilityDao facilityDao;
 
-    public FacilityController(FacilityDao facilityDao){
-        this.facilityDao = new JdbcFacilityDao();
+    public FacilityController(FacilityDao facilityDao) {
+        this.facilityDao = facilityDao;
     }
 
 
-@RequestMapping ( path= "/getOfficeInfo", method = RequestMethod.GET)
-    public Facility getFacilitiesByID(@PathVariable int Id){
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
+    @RequestMapping(path = "/facilities/{facilityId}", method = RequestMethod.GET)
+    public Facility getFacilitiesByID(@PathVariable int facilityId) {
         Facility facility = null;
 
-        try{
-            facility = facilityDao.getFacilitiesByID(Id);
-            if(facility == null){
+        try {
+            facility = facilityDao.getFacilitiesByID(facilityId);
+            if (facility == null) {
                 throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Office not found");
             }
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
         }
-        return facilityDao.getFacilitiesByID(Id);
-}
-    @ResponseStatus(HttpStatus.CREATED)
-    @RequestMapping(path = "/createFacility", method = RequestMethod.POST)
-    public Facility create(@Valid @RequestBody Facility facility) {
-        Facility createFacility;
+        return facilityDao.getFacilitiesByID(facilityId);
+    }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @RequestMapping(path = "/facilities/{facilityId}", method = RequestMethod.PUT)
+    public Facility updateFacility(@PathVariable int facilityId, @Valid @RequestBody Facility modifiedFacility) {
+        Facility facility = null;
 
         try {
-            createFacility = facilityDao.createFacility(facility);
-        } catch (DaoException e){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
-        }
-        return createFacility;
-    }
-    @RequestMapping(path = "/updateofficeInfo", method = RequestMethod.PUT)
-    public Facility update(@PathVariable int id, @RequestBody Facility facility) {
-        // id on the path takes precedence over the id in the request body, if any
-        facility.setFacilityId(id);
-        try {
-            Facility updatedFacility = facilityDao.updateFacility(facility);
-            return updatedFacility;
+            modifiedFacility.setFacilityId(facilityId);
+            facility = facilityDao.updateFacility(modifiedFacility);
+
+            if (facility == null) {
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Facility not found");
+            }
         } catch (DaoException e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "ID isn't valid");
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
         }
+
+        return facility;
     }
 }
+
+
 
 
 

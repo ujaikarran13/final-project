@@ -1,7 +1,13 @@
 package com.techelevator.dao;
 
 import com.techelevator.exception.DaoException;
+import com.techelevator.model.Availability;
 import com.techelevator.model.Facility;
+import org.springframework.dao.DataAccessException;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.jdbc.CannotGetJdbcConnectionException;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -9,76 +15,69 @@ import java.util.List;
 
 @Component
 public class JdbcFacilityDao implements FacilityDao{
+private final JdbcTemplate jdbcTemplate;
 
-   private static List<Facility> facilities = new ArrayList<>();
-
-   public JdbcFacilityDao(){
-       if (facilities.size() == 0){
-           setFacilities();
-       }
-   }
+public JdbcFacilityDao(JdbcTemplate jdbcTemplate){
+    this.jdbcTemplate = jdbcTemplate;
+}
 
 
     @Override
     public Facility getFacilitiesByID(int facilityId) {
-       for (Facility facility : facilities){
-           if (facility.getFacilityId() == facilityId){
-               return facility;
-           }
-       }
-       return null;
+        Facility facility = null;
+
+
+        String sql = "SELECT * FROM facilities WHERE facility_id = ? ";
+
+        try {
+            SqlRowSet results = jdbcTemplate.queryForRowSet(sql, facilityId);
+            if (results.next()) {
+                facility = mapRowToFacility(results);
+            }
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to server or database", e);
+        } catch (DataAccessException e){
+            throw new DaoException("Database access error", e);
+        }
+
+        return facility;
     }
+
 
     @Override
-    public Facility createFacility(Facility facility){
-       facility.setFacilityId(getMaxIdPlusOne());
-       facilities.add(facility);
-       return facility;
+    public Facility updateFacility(Facility modifiedFacility) {
+        Facility updatedFacility = null;
 
-    }
+        String sql = "UPDATE facilities SET facility_name=?, address=?, phone_number=?, cost_per_hour=? WHERE facility_id=?;";
 
-
-    @Override
-public Facility updateFacility(Facility facility) {
-        Facility result = facility;
-        boolean finished = false;
-
-        for (int i = 0; i < facilities.size(); i++) {
-            if (facilities.get(i).getFacilityId() == facility.getFacilityId()) {
-                facilities.set(i, result);
-                finished = true;
-                break;
+        try {
+            int rowsAffected = jdbcTemplate.update(sql, modifiedFacility.getFacilityName(), modifiedFacility.getAddress(), modifiedFacility.getPhoneNumber(),
+                    modifiedFacility.getCostPerHour(), modifiedFacility.getFacilityId());
+            if (rowsAffected == 0) {
+                throw new DaoException("Zero rows affected, expected at least one");
             }
+            updatedFacility = getFacilitiesByID(modifiedFacility.getFacilityId());
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to server or database", e);
+        } catch (DataIntegrityViolationException e) {
+            throw new DaoException("Data integrity violation " + e.getMessage(), e);
         }
-        if (!finished) {
-            throw new DaoException("Facility to update not found");
-        }
-        return result;
+
+        return updatedFacility;
+
     }
 
 
-        private void setFacilities () {
-            facilities.add(new Facility(1,
-                    "City Health Clinic",
-                    "123 Main St, Springfield, IL 62701",
-                    "555-1111",
-                    100));
-            facilities.add(new Facility(2,
-                    "Downtown Medical Center",
-                    "456 Elm St, Springfield, IL 62702",
-                    "555-2222",
-                    150));
+    private Facility mapRowToFacility(SqlRowSet results) {
 
-        }
+        Facility facility = new Facility();
+        facility.setFacilityId(results.getInt("facility_id"));
+        facility.setFacilityName(results.getString("facility_name"));
+        facility.setAddress(results.getString("address"));
+        facility.setPhoneNumber(results.getString("phone_number"));
+        facility.setCostPerHour(results.getInt("cost_per_hour"));
+        return facility;
 
-        private int getMaxIdPlusOne() {
-            int maxId = 0;
-            for (Facility facility : facilities) {
-                if (facility.getFacilityId() > maxId) {
-                    maxId = facility.getFacilityId();
-                }
-            }
-            return maxId;
-        }
     }
+}
 

@@ -8,11 +8,7 @@ import java.util.List;
 public interface  FacilityDao {
 
 
-
-
     Facility getFacilitiesByID(int facilityId);
-
-    Facility createFacility(Facility facility);
 
     Facility updateFacility(Facility facility);
 

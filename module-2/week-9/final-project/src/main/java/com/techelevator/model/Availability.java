@@ -1,19 +1,21 @@
 package com.techelevator.model;
 
+import java.time.LocalTime;
+
 public class Availability {
 
         private int availabilityId;
         private int doctorId;
         private String dayOfWeek;
-        private String startTime;
-        private String endTime;
+        private LocalTime startTime;
+        private LocalTime endTime;
 
         public Availability(int availabilityId, int doctorId, String dayOfWeek, String startTime, String endTime) {
             this.availabilityId = availabilityId;
             this.doctorId = doctorId;
             this.dayOfWeek = dayOfWeek;
-            this.startTime = startTime;
-            this.endTime = endTime;
+            this.startTime = LocalTime.parse(startTime);
+            this.endTime = LocalTime.parse(endTime);
         }
 
     public Availability() {
@@ -44,20 +46,20 @@ public class Availability {
             this.dayOfWeek = dayOfWeek;
         }
 
-        public String getStartTime() {
+        public LocalTime getStartTime() {
             return startTime;
         }
 
         public void setStartTime(String startTime) {
-            this.startTime = startTime;
+            this.startTime = LocalTime.parse(startTime);
         }
 
-        public String getEndTime() {
+        public LocalTime getEndTime() {
             return endTime;
         }
 
         public void setEndTime(String endTime) {
-            this.endTime = endTime;
+            this.endTime = LocalTime.parse(endTime);
         }
     }
 

@@ -47,7 +47,7 @@ public class Facility {
         }
 
         public void setPhoneNumber(String phoneNumber) {
-            this.phoneNumber = this.phoneNumber;
+            this.phoneNumber = phoneNumber;
         }
 
         public int getCostPerHour() {
