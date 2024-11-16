@@ -1,0 +1,41 @@
+body {
+    background-color: #858c90;
+    background-image: linear-gradient(#858c90, #bbb);
+}
+section.list {
+    display: inline-block;
+    background-color: #ddd;
+    font-size: 8px;
+    column-width: 300px;
+    border-radius: 3px;
+    padding-left: 8px;
+    padding-right: 8px;
+}
+
+section.list h2{
+    font-weight: bold;
+}
+
+section.list h2{
+    font-weight: bold;
+    margin-block-start: .5em;
+    margin-block-end: .5em;
+}
+section.list ul.cards li.card{
+    background-color: white;
+    margin-bottom: 10px;
+    list-style: none;
+    padding: 8px;
+
+}
+.labels{
+    width: 35px;
+    height: 8px;
+    border-radius: 3px;
+    background-color: black;
+}
+
+section.list ul.cards li.card:hover{
+background-color: rgba(33, 130, 186, 0.25);
+color: darkblue;
+}

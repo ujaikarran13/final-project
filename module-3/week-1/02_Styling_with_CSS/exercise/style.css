@@ -19,3 +19,70 @@ ul {
   margin: 0;
   padding: 0;
 }
+
+aside {
+  position: fixed;  
+  top: 0;          
+  left: 0;         
+  width: 200px;    
+  height: 100vh;    
+  border-right: 1px solid #00ADEE; 
+  background-color: #f4f4f4; 
+  padding: 20px;    
+}
+
+aside img {
+  width: 120px;          
+  height: auto;        
+  margin: 0 auto;
+}
+
+header {
+  text-align: center; 
+  margin-bottom: 20px; 
+}
+
+
+header img {
+  width: 600px;
+  height: auto; 
+  max-width: 2400px;
+  margin: left; 
+  padding-left: 200px;
+}
+
+#placeholder img.banner {
+  width: 2400px;         /* Make the image responsive */
+  height: 800px;        /* Maintain aspect ratio */
+  max-width: 2400px;   /* Optional: Limit max width */
+  margin: 0 auto;      /* Center the image */
+}
+
+nav ul li {
+  display: block;                        
+  text-align: center;   
+  width: 100%;              
+  text-transform: uppercase;         
+  border: 1px #00ADEE;     
+  margin-bottom: 5px;                 
+}
+
+nav ul li a {
+  display: block;                 
+  color: #00ADEE;                     
+  padding: 10px 15px;               
+  text-align: center;                 
+  text-transform: uppercase;         
+  border: 1px #00ADEE;     
+  border-spacing: 5px;
+  margin-bottom: 5px;    
+  font-weight: bold;
+  text-underline-offset: 15px;          
+  
+
+}
+
+nav ul li:first-child {
+  text-decoration: underline;  
+  color: #00ADEE;
+}
