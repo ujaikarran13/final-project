@@ -76,32 +76,34 @@ header img {
     grid-area: headline;
   }
   
-  div.student-picture img{
+  main div.student-picture img{
     grid-area: student-picture;
     text-align: center;
   }
 
-  div.student-quote h2 {
+  main div.student-quote h2 {
     grid-area: student-quote;
   }
 
-  div.student-profile p {
+  main div.student-profile p {
     grid-area: student-profile;
   }
-  div.student-contact p {
+
+  main div.student-contact p {
     grid-area: student-contact;
     text-align: center;
   }
-  div.experience-grid experience-code h3{
+
+  main div.experience-grid experience-code h3{
     grid-area: experience;
   }
-  div.experience-grid experience-database h3{
+  main div.experience-grid experience-database h3{
     grid-area: experience;
   }
-  div.experience-grid experience-web h3{
+  main div.experience-grid experience-web h3{
     grid-area: experience;
   }
-  div.experience-grid experience-design h3{
+  main div.experience-grid experience-design h3{
     grid-area: experience;
   }
   
