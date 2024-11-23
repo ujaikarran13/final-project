@@ -54,13 +54,13 @@ header img {
 
 #main-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);  /* 3 equal-width columns */
+    grid-template-columns: 1fr 1fr 1fr;  
     grid-template-rows:auto;    
     grid-template-areas: 
       "headline headline student-picture"
       "student-quote student-quote student-picture"
       "student-profile student-profile student-contact"
-      "experience experience experience";  
+      "experience-grid experience-grid experience-grid";  
     column-gap: 50px; 
     row-gap: 20px;   
     align-items: center; 
