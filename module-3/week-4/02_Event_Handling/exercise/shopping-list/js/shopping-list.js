@@ -30,9 +30,38 @@ function displayGroceries() {
   groceries.forEach((item) => {
     const li = document.createElement('li');
     li.textContent = item.name;
+
+    if (item.completed) {
+      li.classList.add('completed');
+    }
     const checkCircle = document.createElement('i');
     checkCircle.setAttribute('class', 'far fa-check-circle');
+    checkCircle.addEventListener('click', () => toggleCompletion(item, li, checkCircle));
     li.appendChild(checkCircle);
     ul.appendChild(li);
   });
+
+  function toggleCompletion(item, li, checkCircle) {
+    item.completed = !item.completed;
+    if (item.completed) {
+      li.classList.add('completed');
+      checkCircle.classList.remove('far');
+      checkCircle.classList.add('fas');
+    } else {
+      li.classList.remove('completed');
+      checkCircle.classList.remove('fas');
+      checkCircle.classList.add('far');
+    }
+  }
+  function markCompleted() {
+    groceries.forEach(item => {
+      item.completed = allItemsIncomplete;
+    });
+    allItemsIncomplete = !allItemsIncomplete;
+    displayGroceries();
+  }
+  setPageTitle();
+  displayGroceries();
+
+  document.querySelector('.btn').addEventListener('click', markCompleted);
 }
