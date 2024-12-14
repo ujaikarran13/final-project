@@ -2,3 +2,11 @@
     style.css - this stylesheet is linked from index.html to apply styles to the products home page.
     Add all of your custom styles here.
 */
+
+html {
+    font-size: 16px;
+  }
+  
+  body {
+    background-color: rgba(255, 255, 255, 0.781);
+  }
