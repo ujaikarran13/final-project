@@ -62,4 +62,11 @@ let productService = {
     return this.allProducts;
   },
 
+  searchProducts(searchTerm) {
+    const lowerCaseSearchTerm = searchTerm.toLowerCase();
+    return this.allProducts.filter(product =>
+      product.name.toLowerCase().includes(lowerCaseSearchTerm) ||
+      product.description.toLocaleLowerCase().includes(lowerCaseSearchTerm)
+      );
+  },
 };

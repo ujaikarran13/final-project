@@ -14,13 +14,28 @@
     <script src="script/app.js"></script>
   </head>
   <body>
+    <header id="header">
+      <img src="img/logo_400x70.png" alt="Logo" class="logo">
+    </header>
+    <nav id="navbar">
+      <a href="#" class="nav-link left">Home</a>
+      <a href="#" class="nav-link left">Cart</a>
+      <a href="#" class="nav-link right">Logout</a>
+      <div id="message-window" class="hidden"></div>
+   <div id="search-container">
+    <input type="text" id="searchBar" placeholder="Search Products...">
+   </div>
+  </nav>
     <div id="app">
       <main>
         <section id="product-cards">
+          <h2 id="products-title">Products</h2>
           <article class="product-card">
-            <div class="sku">SKU-001</div>
-            <div class="price">$1.99</div>
-            <div class="product-name action" data-id="1">A super product</div>
+            <div class="productId">1</div>
+            <div class="sku">MUG-023</div>
+            <div class="price">$14.99</div>
+            <div class="description">Start your day off right!</div>
+            <div class="product-name action" data-id="1">Solar Geeks coffee mug</div>
             <div class="product-image">
               <img src="img/product_350x250.jpg">
             </div>
@@ -29,9 +44,11 @@
             </div>
           </article>
           <article class="product-card">
-            <div class="sku">SKU-002</div>
-            <div class="price">$2.99</div>
-            <div class="product-name action" data-id="2">A super-duper product</div>
+            <div class="productId">2</div>
+            <div class="sku">YET-001</div>
+            <div class="price">$21.99</div>
+            <div class="description">Keep cool all day long.</div>
+            <div class="product-name action" data-id="2">Solar Geeks Yeti</div>
             <div class="product-image">
               <img src="img/product_350x250.jpg">
             </div>
@@ -40,9 +57,11 @@
             </div>
           </article>
           <article class="product-card">
-            <div class="sku">SKU-003</div>
-            <div class="price">$3.99</div>
-            <div class="product-name action" data-id="3">A super-duper-duper product</div>
+            <div class="productId">3</div>
+            <div class="sku">ART-256</div>
+            <div class="price">$9.59</div>
+            <div class="description">Beautiful view of a galaxy</div>
+            <div class="product-name action" data-id="3">Galactic poster</div>
             <div class="product-image">
               <img src="img/product_350x250.jpg">
             </div>
@@ -51,9 +70,50 @@
             </div>
           </article>
           <article class="product-card">
-            <div class="sku">SKU-004</div>
-            <div class="price">$4.99</div>
-            <div class="product-name action" data-id="4">A super-duper-duper-duper product. I mean, a really awesome product. </div>
+            <div class="productId">4</div>
+            <div class="sku">TOY-978</div>
+            <div class="price">$39.99</div>
+            <div class="description">To infinite imagination</div>
+            <div class="product-name action" data-id="4">Toy rocket</div>
+            <div class="product-image">
+              <img src="img/product_350x250.jpg">
+            </div>
+            <div class="cart">
+              <i class="fa-solid fa-cart-plus icon action" title="Add item to cart"></i>
+            </div>
+          </article>
+          <article class="product-card">
+            <div class="productId">5</div>
+            <div class="sku">EAT-235</div>
+            <div class="price">$5.79</div>
+            <div class="description">As cold as space</div>
+            <div class="product-name action" data-id="5">Astronaut ice cream</div>
+            <div class="product-image">
+              <img src="img/product_350x250.jpg">
+            </div>
+            <div class="cart">
+              <i class="fa-solid fa-cart-plus icon action" title="Add item to cart"></i>
+            </div>
+          </article>
+          <article class="product-card">
+            <div class="productId">6</div>
+            <div class="sku">HAT-928</div>
+            <div class="price">$16.89</div>
+            <div class="description">Look stylish with our logo</div>
+            <div class="product-name action" data-id="6">Solar Geeks baseball cap</div>
+            <div class="product-image">
+              <img src="img/product_350x250.jpg">
+            </div>
+            <div class="cart">
+              <i class="fa-solid fa-cart-plus icon action" title="Add item to cart"></i>
+            </div>
+          </article>
+          <article class="product-card">
+            <div class="productId">7</div>
+            <div class="sku">LIT-612</div>
+            <div class="price">$7.99</div>
+            <div class="description">Learn about astrophysics</div>
+            <div class="product-name action" data-id="7">Intro to Astrophysics</div>
             <div class="product-image">
               <img src="img/product_350x250.jpg">
             </div>
@@ -63,6 +123,9 @@
           </article>
         </section>
       </main>
+      <footer id="footer">
+        <p>&copy; 2024 Retailer Name. All Rights Reserved.</p>
+      </footer>
     </div>
   </body>
 </html>
