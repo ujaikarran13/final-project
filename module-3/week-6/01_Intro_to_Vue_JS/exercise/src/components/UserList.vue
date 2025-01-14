@@ -1,14 +1,14 @@
 <template>
   <table id="tblUsers">
     <thead>
-    <tr>
+      <tr>
         <th>First Name</th>
         <th>Last Name</th>
         <th>Username</th>
         <th>Email Address</th>
         <th>Status</th>
-    </tr>
-    <tr>
+      </tr>
+      <tr>
         <td><input type="text" v-model="search.firstName" placeholder="Filter by First Name"/></td>
         <td><input type="text" v-model="search.lastName" placeholder="Filter by Last Name"/></td>
         <td><input type="text" v-model="search.username" placeholder="Filter by Username"/></td>
@@ -23,7 +23,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr v-for="(user, index) in filteredList" :key="index">
+      <tr v-for="user in filteredList" :key="user.username" :class="{'inactive': user.status === 'Inactive'}">
         <td>{{ user.firstName }}</td>
         <td>{{ user.lastName }}</td>
         <td>{{ user.username }}</td>
@@ -33,6 +33,8 @@
     </tbody>
   </table>
 </template>
+
+
 
 <script>
 export default {
@@ -53,9 +55,9 @@ export default {
         emailAddress: '',
         status: ''
       }
-  };
-},
-computed: {
+    };
+  },
+  computed: {
     filteredList() {
       return this.users.filter(user => {
         return (
@@ -74,10 +76,10 @@ computed: {
 <style scoped>
 table {
   margin-top: 20px;
-  font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 th {
-  text-transform: uppercase
+  text-transform: uppercase;
 }
 td {
   padding: 10px;
