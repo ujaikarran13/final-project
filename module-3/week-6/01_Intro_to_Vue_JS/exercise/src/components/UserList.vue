@@ -23,7 +23,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr v-for="(user, index) in filteredUsers" :key="index" :class="{'inactive': user.status === 'Inactive'}">
+      <tr v-for="(user, index) in filteredList" :key="index">
         <td>{{ user.firstName }}</td>
         <td>{{ user.lastName }}</td>
         <td>{{ user.username }}</td>
