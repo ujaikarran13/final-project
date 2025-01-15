@@ -9,13 +9,13 @@
         <th>Status</th>
       </tr>
       <tr>
-        <td><input type="text" v-model="search.firstName" placeholder="Filter by First Name"/></td>
-        <td><input type="text" v-model="search.lastName" placeholder="Filter by Last Name"/></td>
-        <td><input type="text" v-model="search.username" placeholder="Filter by Username"/></td>
-        <td><input type="text" v-model="search.emailAddress" placeholder="Filter by Email"/></td>
+        <td><input id="firstNameFilter" type="text" v-model="search.firstName" placeholder="First Name" /></td>
+        <td><input id="lastNameFilter" type="text" v-model="search.lastName" placeholder="Last Name" /></td>
+        <td><input id="usernameFilter" type="text" v-model="search.username" placeholder="Username" /></td>
+        <td><input id="emailFilter" type="text" v-model="search.emailAddress" placeholder="Email" /></td>
         <td>
-          <select v-model="search.status">
-            <option value="">Show All</option>
+          <select id="statusFilter" v-model="search.status">
+            <option value="">All</option>
             <option value="Active">Active</option>
             <option value="Inactive">Inactive</option>
           </select>
@@ -23,7 +23,8 @@
       </tr>
     </thead>
     <tbody>
-      <tr v-for="user in filteredList" :key="user.username" :class="{'inactive': user.status === 'Inactive'}">
+      <tr v-for="user in filteredUsers" v-bind:key="user.username" 
+      v-bind:class="{'inactive': user.status === 'Inactive'}">
         <td>{{ user.firstName }}</td>
         <td>{{ user.lastName }}</td>
         <td>{{ user.username }}</td>
@@ -60,12 +61,8 @@ export default {
   computed: {
     filteredList() {
       return this.users.filter(user => {
-        return (
-          (this.search.firstName ? user.firstName.toLowerCase().includes(this.search.firstName.toLowerCase()) : true) &&
-          (this.search.lastName ? user.lastName.toLowerCase().includes(this.search.lastName.toLowerCase()) : true) &&
-          (this.search.username ? user.username.toLowerCase().includes(this.search.username.toLowerCase()) : true) &&
-          (this.search.emailAddress ? user.emailAddress.toLowerCase().includes(this.search.emailAddress.toLowerCase()) : true) &&
-          (this.search.status ? user.status.toLowerCase() === this.search.status.toLowerCase() : true)
+        return Object.keys(this.search).every(key => 
+          !this.search[key] || user[key].toLowerCase().includes(this.search[key].toLowerCase())
         );
       });
     }
