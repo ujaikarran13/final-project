@@ -2,7 +2,7 @@
   <div class="reading-list">
     <h1>My Reading List</h1>
     <ul>
-      <li v-for="book in $store.state.books" :key="book.isbn">
+      <li v-for="book in $store.state.books" :key="book.isbn"> 
         <BookCard :book="book" />
       </li>
     </ul>
