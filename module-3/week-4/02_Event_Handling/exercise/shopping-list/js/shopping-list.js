@@ -1,5 +1,6 @@
 let allItemsIncomplete = true;
-const pageTitle = 'My Shopping List';
+
+
 const groceries = [
   { id: 1, name: 'Oatmeal', completed: false },
   { id: 2, name: 'Milk', completed: false },
@@ -13,18 +14,12 @@ const groceries = [
   { id: 10, name: 'Tea', completed: false }
 ];
 
-/**
- * This function will get a reference to the title and set its text to the value
- * of the pageTitle variable that was set above.
- */
+const pageTitle = document.querySelector('h1'); 
+
 function setPageTitle() {
-  const title = document.getElementById('title');
-  title.textContent = pageTitle;
+  pageTitle.textContent = "My Shopping List";
 }
 
-/**
- * This function will loop over the array of groceries that was set above and add them to the DOM.
- */
 function displayGroceries() {
   const ul = document.querySelector('ul');
   ul.innerHTML= '';
@@ -36,44 +31,52 @@ function displayGroceries() {
     if (item.completed) {
       li.classList.add('completed');
     }
+
     const checkCircle = document.createElement('i');
+    checkCircle.classList.add('far'); 
+    if (item.completed) {
+      checkCircle.classList.remove('far');
+      checkCircle.classList.add('fas'); 
+    }
     checkCircle.addEventListener('click', () => markItemComplete(item, li, checkCircle));
     checkCircle.addEventListener('dblclick', () => markItemIncomplete(item, li, checkCircle));
-    li.appendChild(checkCircle);
-    ul.appendChild(li);
-  });
 
-  function markItemComplete(item, li, checkCircle) {
-    item.completed = !item.completed;
-    if (!item.completed) {
-      item.completed = true;
-      li.classList.add('completed');
-      checkCircle.classList.remove('far');
-      checkCircle.classList.add('fas');
-    }
-  }
-  function markItemIncomplete(item, li, checkCircle) {
-    if (item.completed) {
-      item.completed = false;
-      li.classList.remove('completed');
-      checkCircle.classList.remove('fas');
-      checkCircle.classList.add('far');
-    }
-  }
-  function markCompleted() {
-    groceries.forEach(item => {
-      item.completed = allItemsIncomplete;
-    });
-  
-    allItemsIncomplete = !allItemsIncomplete;
-    document.querySelector('.btn').textContent = allItemsIncomplete ? 'Mark All Complete' : 'Mark All Incomplete';
-    displayGroceries(); 
-  }
-  document.addEventListener('DOMContentLoaded', () => {
-    setPageTitle();
-    displayGroceries();
+    li.appendChild(checkCircle);  
+    ul.appendChild(li);  
   });
-  document.querySelector('.btn').addEventListener('click', markCompleted);
 }
 
+function markItemComplete(item, li, checkCircle) {
+  if (!item.completed) {
+    item.completed = true;
+    li.classList.add('completed');
+    checkCircle.classList.remove('far');
+    checkCircle.classList.add('fas');
+  }
+}
+function markItemIncomplete(item, li, checkCircle) {
+  if (item.completed) {
+    item.completed = false;
+    li.classList.remove('completed');
+    checkCircle.classList.remove('fas');
+    checkCircle.classList.add('far');
+  }
+}
+function toggleAllItems() {
+  groceries.forEach(item => {
+    item.completed = allItemsIncomplete;  
+  });
 
+  allItemsIncomplete = !allItemsIncomplete;
+  document.querySelector('.btn').textContent = allItemsIncomplete ? 'Mark All Complete' : 'Mark All Incomplete';
+
+  
+  displayGroceries();
+}
+document.querySelector('#mark-all-button').addEventListener('click', toggleAllItems);
+
+
+document.addEventListener('DOMContentLoaded', () => {
+  setPageTitle();  
+  displayGroceries();  
+});
