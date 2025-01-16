@@ -15,19 +15,19 @@
       <tbody>
         <tr>
           <td>
-            <input type="checkbox" id="selectAll" />
+            <input type="checkbox" id="selectAll" v-model="selectAllChecked" @change="toggleSelectAll" />
           </td>
           <td>
-            <input type="text" id="firstNameFilter" v-model="filter.firstName" />
+            <input id="firstNameFilter" type="text" v-model="filter.firstName" placeholder="First Name" />
           </td>
           <td>
-            <input type="text" id="lastNameFilter" v-model="filter.lastName" />
+            <input id="lastNameFilter" type="text" v-model="filter.lastName" placeholder="Last Name" />
           </td>
           <td>
-            <input type="text" id="usernameFilter" v-model="filter.username" />
+            <input id="usernameFilter" type="text" v-model="filter.username" placeholder="Username" />
           </td>
           <td>
-            <input type="text" id="emailFilter" v-model="filter.emailAddress" />
+            <input id="emailFilter" type="text" v-model="filter.emailAddress" placeholder="Email" />
           </td>
           <td>
             <select id="statusFilter" v-model="filter.status">
@@ -41,10 +41,9 @@
         <tr
           v-for="user in filteredList"
           v-bind:key="user.id"
-          v-bind:class="{ deactivated: user.status === 'Inactive' }"
-        >
+          v-bind:class="{ 'deactivated': user.status === 'Inactive' }">
           <td>
-            <input type="checkbox" v-bind:id="user.id" v-bind:value="user.id" />
+            <input type="checkbox" v-bind:id="user.id" v-bind:value="user.id" v-model="selectedUserIds" />
           </td>
           <td>{{ user.firstName }}</td>
           <td>{{ user.lastName }}</td>
@@ -52,36 +51,37 @@
           <td>{{ user.emailAddress }}</td>
           <td>{{ user.status }}</td>
           <td>
-            <button class="btnActivateDeactivate">Activate or Deactivate</button>
+            <button class="btnActivateDeactivate" @click="toggleUserStatus(user.id)">
+              {{ user.status === "Active" ? "Deactivate" : "Activate" }}
+            </button>
           </td>
         </tr>
       </tbody>
     </table>
 
     <div class="all-actions">
-      <button>Activate Users</button>
-      <button>Deactivate Users</button>
-      <button>Delete Users</button>
+      <button :disabled="selectedUserIds.length === 0" @click="activateUsers">Activate Users</button>
+    <button :disabled="selectedUserIds.length === 0" @click="deactivateUsers">Deactivate Users</button>
+    <button :disabled="selectedUserIds.length === 0" @click="deleteUsers">Delete Users</button>
     </div>
 
-    <button>Add New User</button>
-
-    <form id="frmAddNewUser">
+    <button @click="toggleNewUserForm">Add New User</button>
+    <form id= "frmAddNewUser" v-show="showNewUserForm" @submit.prevent="addNewUser">
       <div class="field">
         <label for="firstName">First Name:</label>
-        <input type="text" id="firstName" name="firstName" />
+        <input type="text" v-model="newUser.firstName" id="firstName" name="firstName" />
       </div>
       <div class="field">
         <label for="lastName">Last Name:</label>
-        <input type="text" id="lastName" name="lastName" />
+        <input type="text" v-model="newUser.lastName" id="lastName" name="lastName" />
       </div>
       <div class="field">
         <label for="username">Username:</label>
-        <input type="text" id="username" name="username" />
+        <input type="text" v-model="newUser.username" id="username" name="username" />
       </div>
       <div class="field">
         <label for="emailAddress">Email Address:</label>
-        <input type="text" id="emailAddress" name="emailAddress" />
+        <input type="text" v-model="newUser.emailAddress" id="emailAddress" name="emailAddress" />
       </div>
       <button type="submit" class="btn save">Save User</button>
     </form>
@@ -90,9 +90,12 @@
 
 <script>
 export default {
+ 
   data() {
     return {
-      filter: {
+      showNewUserForm: false,
+      selectAllChecked: false,
+      newUser: {
         firstName: "",
         lastName: "",
         username: "",
@@ -100,13 +103,13 @@ export default {
         status: ""
       },
       nextUserId: 7,
-      newUser: {
-        id: null,
+      selectedUserIds: [],
+      filter: {
         firstName: "",
         lastName: "",
         username: "",
         emailAddress: "",
-        status: "Active"
+        status: ""
       },
       users: [
         {
@@ -160,11 +163,73 @@ export default {
       ]
     };
   },
-  methods: {
-    getNextUserId() {
-      return this.nextUserId++;
+  watch: {
+    selectAllChecked(newValue) {
+      if (newValue) {
+        this.selectedUserIds = this.users.map(user => user.id);
+      } else {
+        this.selectedUserIds = [];
+      }
     }
   },
+  methods: {
+    addNewUser(){
+    this.newUser.id = this.getNextUserId();
+    this.users.push({...this.newUser })
+    this.clearNewUserForm();
+  },
+    toggleSelectAll(){
+      this.selectAllChecked = !this.selectAllChecked;
+    },
+    activateUsers() {
+      this.selectedUserIds.forEach(id => {
+        const user = this.users.find(u => u.id === id);
+        if (user) user.status = "Active";
+      });
+      this.clearSelection(); 
+    },
+    deactivateUsers() {
+      this.selectedUserIds.forEach(id => {
+        const user = this.users.find(u => u.id === id);
+        if (user) user.status = "Inactive";
+      });
+      this.clearSelection(); 
+    },
+    deleteUsers() {
+      this.users = this.users.filter(user => !this.selectedUserIds.includes(user.id));
+      this.clearSelection(); 
+    },
+    clearSelection() {
+      this.selectedUserIds = [];
+    },
+
+    toggleUserStatus(userId){
+      const user = this.users.find(u => u.id === userId);
+      if (user){
+        user.status = user.status === "Active" ? "Inactive" : "Active";
+      }
+    },
+    toggleNewUserForm(){
+      this.showNewUserForm = !this.showNewUserForm;
+    },
+    getNextUserId() {
+      return this.nextUserId++;
+    },
+  },
+ 
+  clearNewUserForm(){
+    this.newUser= {
+      id: null,
+      firstName: "",
+      lastName: "",
+      username: "",
+      emailAddress: "",
+      status: "Active"
+    };
+      this.showNewUserForm = false; 
+    },
+  
+
   computed: {
     filteredList() {
       let filteredUsers = this.users;
