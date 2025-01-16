@@ -1,7 +1,7 @@
 <template>
 <div :class="['book-card', { read: book.read }]">
     <img
-      v-bind:src="'http://covers.openlibrary.org/b/isbn/' + book.isbn + '-M.jpg'"
+    v-bind:src="'http://covers.openlibrary.org/b/isbn/' + book.isbn + '-M.jpg'"
       alt="Book cover"
       class="book-image"
     />

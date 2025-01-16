@@ -27,6 +27,8 @@ function setPageTitle() {
  */
 function displayGroceries() {
   const ul = document.querySelector('ul');
+  ul.innerHTML= '';
+
   groceries.forEach((item) => {
     const li = document.createElement('li');
     li.textContent = item.name;
@@ -35,19 +37,24 @@ function displayGroceries() {
       li.classList.add('completed');
     }
     const checkCircle = document.createElement('i');
-    checkCircle.setAttribute('class', 'far fa-check-circle');
-    checkCircle.addEventListener('click', () => toggleCompletion(item, li, checkCircle));
+    checkCircle.addEventListener('click', () => markItemComplete(item, li, checkCircle));
+    checkCircle.addEventListener('dblclick', () => markItemIncomplete(item, li, checkCircle));
     li.appendChild(checkCircle);
     ul.appendChild(li);
   });
 
-  function toggleCompletion(item, li, checkCircle) {
+  function markItemComplete(item, li, checkCircle) {
     item.completed = !item.completed;
-    if (item.completed) {
+    if (!item.completed) {
+      item.completed = true;
       li.classList.add('completed');
       checkCircle.classList.remove('far');
       checkCircle.classList.add('fas');
-    } else {
+    }
+  }
+  function markItemIncomplete(item, li, checkCircle) {
+    if (item.completed) {
+      item.completed = false;
       li.classList.remove('completed');
       checkCircle.classList.remove('fas');
       checkCircle.classList.add('far');
@@ -57,11 +64,16 @@ function displayGroceries() {
     groceries.forEach(item => {
       item.completed = allItemsIncomplete;
     });
+  
     allItemsIncomplete = !allItemsIncomplete;
-    displayGroceries();
+    document.querySelector('.btn').textContent = allItemsIncomplete ? 'Mark All Complete' : 'Mark All Incomplete';
+    displayGroceries(); 
   }
-  setPageTitle();
-  displayGroceries();
-
+  document.addEventListener('DOMContentLoaded', () => {
+    setPageTitle();
+    displayGroceries();
+  });
   document.querySelector('.btn').addEventListener('click', markCompleted);
 }
+
+
