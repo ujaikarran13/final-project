@@ -11,6 +11,12 @@ function performOperation() {
   const current = parseNumber(display.value);
   previous = parseNumber(previous);
 
+  if (operator === '/' && current === 0) {
+    display.value = 'Error'; 
+    return;
+  }
+
+  
   switch(operator) {
     case '+' :
       result = previous + current;
@@ -59,6 +65,7 @@ function clickNumber(event) {
     display.value = val;
     operatorClicked = false;
   } else {
+    if (val === '.' && display.value.includes('.')) return;
     display.value == 0 ? display.value = val : display.value += val;
   }
 
@@ -73,7 +80,6 @@ function clear() {
 
 // add event listener for when the DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
-
   display = document.getElementById('display');
 
   const numberButtons = document.querySelectorAll('.number');

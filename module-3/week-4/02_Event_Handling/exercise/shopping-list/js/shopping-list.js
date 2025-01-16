@@ -28,16 +28,9 @@ function displayGroceries() {
     const li = document.createElement('li');
     li.textContent = item.name;
 
-    if (item.completed) {
-      li.classList.add('completed');
-    }
-
     const checkCircle = document.createElement('i');
     checkCircle.classList.add('far'); 
-    if (item.completed) {
-      checkCircle.classList.remove('far');
-      checkCircle.classList.add('fas'); 
-    }
+
     checkCircle.addEventListener('click', () => markItemComplete(item, li, checkCircle));
     checkCircle.addEventListener('dblclick', () => markItemIncomplete(item, li, checkCircle));
 
@@ -62,18 +55,21 @@ function markItemIncomplete(item, li, checkCircle) {
     checkCircle.classList.add('far');
   }
 }
+
+document.querySelector('#toggleAll').addEventListener('click', toggleAllItems);
+
 function toggleAllItems() {
+  const allCompleted = groceries.every(item => item.completed);
   groceries.forEach(item => {
-    item.completed = allItemsIncomplete;  
+    item.completed = !allCompleted; 
   });
 
-  allItemsIncomplete = !allItemsIncomplete;
-  document.querySelector('.btn').textContent = allItemsIncomplete ? 'Mark All Complete' : 'Mark All Incomplete';
+  document.querySelector('#toggleAll').textContent = allCompleted ? 'Mark All Complete' : 'Mark All Incomplete';
 
   
   displayGroceries();
 }
-document.querySelector('#mark-all-button').addEventListener('click', toggleAllItems);
+
 
 
 document.addEventListener('DOMContentLoaded', () => {
