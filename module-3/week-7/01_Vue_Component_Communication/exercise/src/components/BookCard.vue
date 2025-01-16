@@ -1,12 +1,31 @@
 <template>
-  <div class="card">
-
+<div :class="['book-card', { read: book.read }]">
+    <img
+      v-bind:src="'http://covers.openlibrary.org/b/isbn/' + book.isbn + '-M.jpg'"
+      alt="Book cover"
+      class="book-image"
+    />
+    <h2 class="book-title">{{ book.title }}</h2>
+    <h3 class="book-author">{{ book.author }}</h3>
+    <button
+      :class="book.read ? 'mark-unread' : 'mark-read'"
+      @click="toggleReadStatus"
+    >
+      {{ book.read ? 'Mark as Unread' : 'Mark as Read' }}
+    </button>
   </div>
 </template>
 
 <script>
 export default {
-
+  props: {
+    book: Object
+  },
+  methods: {
+    toggleReadStatus() {
+      this.$store.commit('toggleReadStatus', this.book.isbn);
+    }
+  }
 }
 </script>
 
