@@ -1,6 +1,6 @@
 let allItemsIncomplete = true;
 
-const pageTitle = document.querySelector('h1'); 
+const pageTitle = document.querySelector('#title'); 
 const groceries = [
   { id: 1, name: 'Oatmeal', completed: false },
   { id: 2, name: 'Milk', completed: false },
