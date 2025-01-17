@@ -1,6 +1,6 @@
 let allItemsIncomplete = true;
 
-
+const pageTitle = document.querySelector('h1'); 
 const groceries = [
   { id: 1, name: 'Oatmeal', completed: false },
   { id: 2, name: 'Milk', completed: false },
@@ -14,7 +14,7 @@ const groceries = [
   { id: 10, name: 'Tea', completed: false }
 ];
 
-const pageTitle = document.querySelector('h1'); 
+
 
 function setPageTitle() {
   pageTitle.textContent = "My Shopping List";
@@ -30,6 +30,12 @@ function displayGroceries() {
 
     const checkCircle = document.createElement('i');
     checkCircle.classList.add('far'); 
+
+    if (item.completed) {
+      li.classList.add('completed');
+      checkCircle.classList.remove('far');
+      checkCircle.classList.add('fas');
+    }
 
     checkCircle.addEventListener('click', () => markItemComplete(item, li, checkCircle));
     checkCircle.addEventListener('dblclick', () => markItemIncomplete(item, li, checkCircle));
@@ -56,23 +62,27 @@ function markItemIncomplete(item, li, checkCircle) {
   }
 }
 
-document.querySelector('#toggleAll').addEventListener('click', toggleAllItems);
-
 function toggleAllItems() {
-  const allCompleted = groceries.every(item => item.completed);
-  groceries.forEach(item => {
-    item.completed = !allCompleted; 
-  });
+  const button = document.querySelector('#toggleAll');
 
-  document.querySelector('#toggleAll').textContent = allCompleted ? 'Mark All Complete' : 'Mark All Incomplete';
+  if (allItemsIncomplete) {
+    groceries.forEach(item => {
+      item.completed = true; 
+    });
+    button.textContent = 'Mark All Incomplete';  
+  } else {
+    groceries.forEach(item => {
+      item.completed = false;
+    });
+    button.textContent = 'Mark All Complete'; 
+  }
 
-  
-  displayGroceries();
+  allItemsIncomplete = !allItemsIncomplete; 
+  displayGroceries();  
 }
-
-
 
 document.addEventListener('DOMContentLoaded', () => {
   setPageTitle();  
   displayGroceries();  
+  document.querySelector('#toggleAll').addEventListener('click', toggleAllItems);
 });
