@@ -1,6 +1,7 @@
+document.addEventListener('DOMContentLoaded', () => {
 let allItemsIncomplete = true;
 
-const pageTitle = document.querySelector('#title'); 
+
 const groceries = [
   { id: 1, name: 'Oatmeal', completed: false },
   { id: 2, name: 'Milk', completed: false },
@@ -17,6 +18,7 @@ const groceries = [
 
 
 function setPageTitle() {
+  const pageTitle = document.querySelector('#title'); 
   pageTitle.textContent = "My Shopping List";
 }
 
@@ -81,16 +83,9 @@ function toggleAllItems() {
   displayGroceries();  
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-  const pageTitle = document.querySelector('#title');
+setPageTitle();
+displayGroceries();
+ 
   const toggleButton = document.querySelector('#toggleAll');
-
-  if (!pageTitle || !toggleButton) {
-    console.error("Page elements are missing!");
-    return;  
-  }
- setPageTitle();
-  displayGroceries();
-
   toggleButton.addEventListener('click', toggleAllItems);
 });
