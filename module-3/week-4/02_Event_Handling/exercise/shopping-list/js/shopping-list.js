@@ -82,7 +82,15 @@ function toggleAllItems() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  setPageTitle();  
-  displayGroceries();  
-  document.querySelector('#toggleAll').addEventListener('click', toggleAllItems);
+  const pageTitle = document.querySelector('#title');
+  const toggleButton = document.querySelector('#toggleAll');
+
+  if (!pageTitle || !toggleButton) {
+    console.error("Page elements are missing!");
+    return;  
+  }
+ setPageTitle();
+  displayGroceries();
+
+  toggleButton.addEventListener('click', toggleAllItems);
 });
