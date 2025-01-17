@@ -49,6 +49,10 @@ function displayGroceries() {
     ul.appendChild(li);  
   });
 }
+document.addEventListener('DOMContentLoaded', () => {
+  init();
+  setPageTitle();
+  displayGroceries();
 
 function markItemComplete(item, li, checkCircle) {
   if (!item.completed) {
@@ -67,8 +71,6 @@ function markItemIncomplete(item, li, checkCircle) {
     checkCircle.classList.add('far');
   }
 }
-
-
 function toggleAllItems() {
   const button = document.querySelector('#toggleAll');
 
@@ -87,10 +89,7 @@ function toggleAllItems() {
   allItemsIncomplete = !allItemsIncomplete; 
   displayGroceries();  
 }
-document.addEventListener('DOMContentLoaded', () => {
-setPageTitle();
-displayGroceries();
- 
+
   const toggleButton = document.querySelector('#toggleAll');
   toggleButton.addEventListener('click', toggleAllItems);
 });
