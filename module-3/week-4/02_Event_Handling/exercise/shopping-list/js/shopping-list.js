@@ -54,8 +54,8 @@ function markItemComplete(item, li, checkCircle) {
   if (!item.completed) {
     item.completed = true;
     li.classList.add('completed');
-    checkCircle.classList.remove('far');
-    checkCircle.classList.add('fas');
+    checkCircle.addEventListener.classList.remove('far');
+    checkCircle.addEventListener.classList.add('fas');
   }
 }
 
@@ -63,8 +63,8 @@ function markItemIncomplete(item, li, checkCircle) {
   if (item.completed) {
     item.completed = false;
     li.classList.remove('completed');
-    checkCircle.classList.remove('fas');
-    checkCircle.classList.add('far');
+    checkCircle.addEventListener.classList.remove('fas');
+    checkCircle.addEventListener.classList.add('far');
   }
 }
 function toggleAllItems() {
