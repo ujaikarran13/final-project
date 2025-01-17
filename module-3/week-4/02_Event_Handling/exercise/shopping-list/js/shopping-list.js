@@ -1,8 +1,11 @@
-document.addEventListener('DOMContentLoaded', () => {
+const shoppingList = document.getElementById('groceries');
+
 let allItemsIncomplete = true;
+let groceries = [];
 
-
-const groceries = [
+function init(){
+ const pageTitle = 'My Shopping List';
+groceries = [
   { id: 1, name: 'Oatmeal', completed: false },
   { id: 2, name: 'Milk', completed: false },
   { id: 3, name: 'Banana', completed: false },
@@ -14,7 +17,7 @@ const groceries = [
   { id: 9, name: 'Salad', completed: false },
   { id: 10, name: 'Tea', completed: false }
 ];
-
+}
 
 
 function setPageTitle() {
@@ -55,6 +58,7 @@ function markItemComplete(item, li, checkCircle) {
     checkCircle.classList.add('fas');
   }
 }
+
 function markItemIncomplete(item, li, checkCircle) {
   if (item.completed) {
     item.completed = false;
@@ -63,6 +67,7 @@ function markItemIncomplete(item, li, checkCircle) {
     checkCircle.classList.add('far');
   }
 }
+
 
 function toggleAllItems() {
   const button = document.querySelector('#toggleAll');
@@ -82,7 +87,7 @@ function toggleAllItems() {
   allItemsIncomplete = !allItemsIncomplete; 
   displayGroceries();  
 }
-
+document.addEventListener('DOMContentLoaded', () => {
 setPageTitle();
 displayGroceries();
  
