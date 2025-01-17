@@ -37,9 +37,9 @@ function displayGroceries() {
     checkCircle.classList.add('far'); 
 
     if (item.completed) {
-      li.classList.add('completed');
       checkCircle.classList.remove('far');
       checkCircle.classList.add('fas');
+      li.classList.add('completed');
     }
 
     checkCircle.addEventListener('click', () => markItemComplete(item, li, checkCircle));
@@ -54,8 +54,8 @@ function markItemComplete(item, li, checkCircle) {
   if (!item.completed) {
     item.completed = true;
     li.classList.add('completed');
-    checkCircle.addEventListener.classList.remove('far');
-    checkCircle.addEventListener.classList.add('fas');
+    checkCircle.classList.remove('far');
+    checkCircle.classList.add('fas');
   }
 }
 
