@@ -31,6 +31,7 @@ function displayGroceries() {
 
   groceries.forEach((item) => {
     const li = document.createElement('li');
+    li.setAttribute('data-id', item.id); 
     li.textContent = item.name;
 
     const checkCircle = document.createElement('i');
@@ -41,9 +42,6 @@ function displayGroceries() {
       checkCircle.classList.add('fas');
       li.classList.add('completed');
     }
-
-    checkCircle.addEventListener('click', () => markItemComplete(item, li, checkCircle));
-    checkCircle.addEventListener('dblclick', () => markItemIncomplete(item, li, checkCircle));
 
     li.appendChild(checkCircle);  
     ul.appendChild(li);  
@@ -90,6 +88,29 @@ document.addEventListener('DOMContentLoaded', () => {
   init();
   setPageTitle();
   displayGroceries();
+  const ul = document.querySelector('ul');
+  ul.addEventListener('click', (event) => {
+    const target = event.target;
+    const li = target.closest('li');
+    const itemId = li?.getAttribute('data-id');
+    const item = groceries.find(grocery => grocery.id == itemId);
+    const checkCircle = li.querySelector('i');
+    if (target === checkCircle) {
+      markItemComplete(item, li, checkCircle);
+    }
+  });
+  ul.addEventListener('dblclick', (event) => {
+    const target = event.target;
+    const li = target.closest('li');
+    const itemId = li?.getAttribute('data-id');
+    const item = groceries.find(grocery => grocery.id == itemId);
+    const checkCircle = li.querySelector('i');
+    
+   
+    if (target === checkCircle) {
+      markItemIncomplete(item, li, checkCircle);
+    }
+  });
   const toggleButton = document.querySelector('#toggleAll');
   toggleButton.addEventListener('click', toggleAllItems);
 });
