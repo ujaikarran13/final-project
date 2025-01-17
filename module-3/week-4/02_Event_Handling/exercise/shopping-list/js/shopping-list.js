@@ -75,6 +75,17 @@ function addItemEventListeners(item, li, checkCircle){
     markItemIncomplete(item, li, checkCircle);
   });
 }
+li.addEventListener('dblclick', function () {
+  markItemIncomplete(item, li, checkCircle);
+});
+
+const listItems = document.querySelectorAll('li');
+listItems.forEach((li) => {
+  const item = { completed: false }; 
+  const checkCircle = li.querySelector('.check-circle'); 
+
+  addItemEventListeners(item, li, checkCircle);
+});
 
 function toggleAllItems() {
   const button = document.querySelector('#toggleAll');
