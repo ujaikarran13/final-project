@@ -63,10 +63,19 @@ function markItemIncomplete(item, li, checkCircle) {
   if (item.completed) {
     item.completed = false;
     li.classList.remove('completed');
-    checkCircle.addEventListener.classList.remove('fas');
-    checkCircle.addEventListener.classList.add('far');
+    checkCircle.classList.remove('fas');
+    checkCircle.classList.add('far');
   }
 }
+function addItemEventListeners(item, li, checkCircle){
+  li.addEventListener('click', function(){
+    markItemComplete(item, li, checkCircle);
+  });
+  li.addEventListener('dblclick', function(){
+    markItemIncomplete(item, li, checkCircle);
+  });
+}
+
 function toggleAllItems() {
   const button = document.querySelector('#toggleAll');
 
