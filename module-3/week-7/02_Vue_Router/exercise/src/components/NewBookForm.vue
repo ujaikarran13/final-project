@@ -20,6 +20,8 @@ export default {
     saveBook() {
       this.$store.commit('SAVE_BOOK', this.book);
       this.book = {};
+      this.errorMessage = '';
+      this.$router.push('/myBooks')
     }
   }
 }
