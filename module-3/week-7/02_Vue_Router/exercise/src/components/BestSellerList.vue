@@ -1,7 +1,7 @@
 <template>
   <section>
     <h2>Best Sellers</h2>
-    <div class="best-seller-list">
+    <div class=".best-seller-list">
       <book-card v-for="book in books" v-bind:book="book" v-bind:key="book.isbn" v-bind:enable-add="true" />
     </div>
   </section>

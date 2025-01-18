@@ -1,6 +1,5 @@
 <template>
-    <div v-if="book">
-      <BookDetails :book="book" />
+    <div v-if="book"> <BookDetails :book="book" />
     </div>
     <div v-else>
       <p>Loading...</p>
@@ -20,7 +19,7 @@
       };
     },
     created() {
-      const isbn = this.$route.params.isbn; 
+      const isbn = this.$route.params.isbn
       this.loadBook(isbn);
     },
     methods: {

@@ -3,7 +3,7 @@
     <nav>
       <router-link v-bind:to="{name: 'home'}">Home View</router-link> |
       <router-link v-bind:to="{name: 'myBooks'}">My Books View</router-link> |
-      <router-link v-bind:to="{name: 'addBook'}">My Books View</router-link>
+      <router-link v-bind:to="{name: 'addBook'}">Add New Book</router-link>
     </nav>
     <router-view />
   </div>

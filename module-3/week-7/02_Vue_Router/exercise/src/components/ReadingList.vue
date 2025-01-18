@@ -1,5 +1,5 @@
 <template>
-  <div class="reading-list">
+  <div class="book-container">
     <router-link v-for="book in books" :key="book.isbn" :to="'/book/' + book.isbn">
       <book-card :book="book" />
     </router-link>
