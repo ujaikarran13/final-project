@@ -12,6 +12,7 @@
 
 <script>
 import MessageDetails from '../components/MessageDetails.vue';
+import MessageService from '../services/MessageService';
 
 export default {
   components: {
@@ -19,20 +20,25 @@ export default {
   },
   data(){
     return {
-      topicId: this.$route.params.topicId,
-      message: {},
+     
+      message: null,
       isLoading: true
     }
   },
   methods: {
-    getMessage(id) {
-      
-      // TODO - Get data from API and set `topics` property
-
-    },
+    async fetchMessageDetails() {
+      try {
+        const messageId = this.$route.params.messageId;
+        this.message = await MessageService.get(messageId);
+      } catch (error) {
+        console.error('Failed to load message details:', error);
+      } finally {
+        this.isLoading = false;
+      }
+    }
   },
   created() {
-    this.getMessage(this.$route.params.messageId);
+    this.fetchMessageDetails();
   }
 };
 </script>

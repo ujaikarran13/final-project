@@ -7,31 +7,46 @@
       <router-link v-bind:to="{ name: 'HomeView' }">Back to Topic List</router-link>
     </nav>
     <topic-details v-bind:topic="topic" />
+    <div v-if="messages.length">
+        <message-list :messages="messages" />
+      </div>
   </div>
 </template>
 
 <script>
 import TopicDetails from '../components/TopicDetails.vue';
+import TopicService from '../services/TopicService';
+import MessageService from '../services/MessageService';
+import MessageList from '../components/MessageDetails.vue';
 
 export default {
   components: {
-    TopicDetails
+    TopicDetails,
+    MessageList
   },
   data() {
     return {
-      topic: {},
+      topic: null,
+      messages: [],
       isLoading: true
-    }
+    };
   },
   methods: {
-    getTopic(id) {
-
-      // TODO - Get data from API and set `topics` property
-
-    },
+    async fetchTopicDetails() {
+      
+      try {
+        const topicId = this.$route.params.topicId;
+        this.topic = await TopicService.get(topicId);
+        this.messages = await MessageService.get(topicId); // Assuming the same topicId is used for messages
+      } catch (error) {
+        console.error('Failed to load topic details or messages:', error);
+      } finally {
+        this.isLoading = false;
+      }
+    }
   },
   created() {
-    this.getTopic(this.$route.params.topicId);
+    this.fetchTopicDetails();
   }
 };
 </script>
