@@ -8,6 +8,11 @@ export default {
 
   get(id) {
     return http.get(`/messages/${id}`);
-  }
-
+  },
+  create(message) {
+    return http.post('/messages', message);
+  },
+  update(id, message) {
+    return http.put(`/messages/${id}`, message);
+  },
 }

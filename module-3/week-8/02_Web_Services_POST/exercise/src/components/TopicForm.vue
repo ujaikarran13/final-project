@@ -12,12 +12,14 @@
 </template>
 
 <script>
+import TopicService from '../services/TopicService';
+
 export default {
   props: {
     topic: {
       type: Object,
       required: true
-    }
+    },
   },
   data() {
     return {
@@ -30,22 +32,35 @@ export default {
       }
     };
   },
+  
   methods: {
     submitForm() {
-      // Do client-side form validation 
-      if (!this.validateForm()) {
-        //Form isn't valid, user must update and submit again.
+      if (!this.validateForm()) { 
         return;
       }
-      // Check for add or edit
+      
       if (this.editTopic.id === 0) {
-
+        TopicService.create(this.editTopic)
+          .then(response => {
+            if (response.status === 201) {
+              this.$router.push({ name: 'HomeView' }); // Redirect to HomeView after success
+            }
+          })
+          .catch(error => {
+            this.handleErrorResponse(error, 'adding');
+          });
         // TODO - Do an add, then navigate Home on success.
         // For errors, call handleErrorResponse
-
       } else {
-
-        // TODO - Do an edit, then navigate back to Topic Details on success
+        TopicService.update(this.editTopic.id, this.editTopic)
+      .then(response => {
+        if (response.status === 200) {
+          this.$router.push({ name: 'TopicDetailsView', params: { topicId: this.editTopic.id } });
+        }
+      })
+      .catch(error => {
+        this.handleErrorResponse(error, 'updating');
+      }); // TODO - Do an edit, then navigate back to Topic Details on success
         // For errors, call handleErrorResponse
 
       }

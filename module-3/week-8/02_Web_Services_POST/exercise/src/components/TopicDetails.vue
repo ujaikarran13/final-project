@@ -44,7 +44,15 @@ export default {
   methods: {
     deleteTopic() {
       if (confirm("Are you sure you want to delete this topic and all associated messages? This action cannot be undone.")) {
-        
+        topicService.delete(this.topic.id)
+      .then(response => {
+        if (response.status === 200) {
+          this.$router.push({ name: 'HomeView' });
+        }
+      })
+      .catch(error => {
+        this.handleErrorResponse(error, 'deleting');
+      });
         // TODO - Do a delete, then navigate Home on success
         // For errors, call handleErrorResponse
         
