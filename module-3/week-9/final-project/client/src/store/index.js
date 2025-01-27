@@ -4,8 +4,8 @@ import axios from 'axios';
 export function createStore(currentToken, currentUser) {
   let store = _createStore({
     state: {
-      token: currentToken || '',
-      user: currentUser || {},
+      token: localStorage.getItem('token') || '',
+      user: JSON.parse(localStorage.getItem('user')) || {},
     },
     mutations: {
       SET_AUTH_TOKEN(state, token) {
@@ -25,7 +25,17 @@ export function createStore(currentToken, currentUser) {
         axios.defaults.headers.common = {};
       }
     },
-
-  })
+    actions: {
+      login({ commit }, user) {
+        return axios.post('/login', user)
+          .then(response => {
+            commit('SET_AUTH_TOKEN', response.data.token);
+          });
+      },
+      register({ commit }, user) {
+        return axios.post('/register', user);
+      }
+    }
+  });
   return store;
 }

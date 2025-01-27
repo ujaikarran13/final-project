@@ -6,7 +6,8 @@ import HomeView from '../views/HomeView.vue'
 import LoginView from '../views/LoginView.vue'
 import LogoutView from '../views/LogoutView.vue'
 import RegisterView from '../views/RegisterView.vue'
-
+import ProfileView from '../views/ProfileView.vue'
+import FacilityView from '../views/FacilityView.vue'
 
 /**
  * The Vue Router is used to "direct" the browser to render a specific view component
@@ -47,13 +48,27 @@ const routes = [
       component: RegisterView,
       meta: {
         requiresAuth: false
+      } 
+    },
+    {
+      path: '/profile',
+      name: 'profile',
+      component: ProfileView,
+      meta: { requiresAuth: true 
+      }
+    },
+    {
+      path: '/facilities',
+      name: 'facilities',
+      component: FacilityView,
+      meta: { requiresAuth: true 
       }
     }
   ];
 
 // Create the router
 const router = createRouter({
-  history: createWebHistory(),
+  history: createWebHistory(import.meta.env.BASE_URL),
   routes: routes
 });
 
