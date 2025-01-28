@@ -6,7 +6,7 @@ import HomeView from '../views/HomeView.vue'
 import LoginView from '../views/LoginView.vue'
 import LogoutView from '../views/LogoutView.vue'
 import RegisterView from '../views/RegisterView.vue'
-import ProfileView from '../views/ProfileView.vue'
+import DoctorsView from '../views/DoctorsView.vue'
 import FacilityView from '../views/FacilityView.vue'
 
 /**
@@ -51,9 +51,9 @@ const routes = [
       } 
     },
     {
-      path: '/profile',
-      name: 'profile',
-      component: ProfileView,
+      path: '/doctors',
+      name: 'doctors',
+      component: DoctorsView,
       meta: { requiresAuth: true 
       }
     },

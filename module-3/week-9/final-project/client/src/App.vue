@@ -1,19 +1,24 @@
 <template>
-  <div id="cart-app">
-    <header></header>
-    <nav>
-        <router-link v-bind:to="{ name: 'logout' }" v-if="$store.state.token">
-          Logout
-        </router-link>
-        <router-link v-bind:to="{ name: 'login' }" v-else>Login</router-link>
-    </nav>
-    <main>
+  <div id="scheduling-app">
+    <app-header id="app-header" title="Scheduling Application" />
+    <main-nav id="main-nav" />
+    <main id="main-content">
       <router-view />
     </main>
-    <footer></footer>
-  </div>
+    <app-footer id="app-footer"/>
+    </div>
 </template>
 
+<script>
+import AppHeader from './components/AppHeader.vue';
+import AppFooter from './components/AppFooter.vue';
+import MainNav from './components/MainNav.vue';
+
+export default {
+  components: {AppHeader, AppFooter, MainNav}
+}
+
+</script>
 <style scoped>
 
 </style>

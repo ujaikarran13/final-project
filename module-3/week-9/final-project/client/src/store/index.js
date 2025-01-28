@@ -1,11 +1,13 @@
 import { createStore as _createStore } from 'vuex';
 import axios from 'axios';
+import FacilityService from '../services/FacilityService';
 
 export function createStore(currentToken, currentUser) {
   let store = _createStore({
     state: {
-      token: localStorage.getItem('token') || '',
-      user: JSON.parse(localStorage.getItem('user')) || {},
+      token: currentToken || '',
+      user: currentUser || {},
+      facilities: []
     },
     mutations: {
       SET_AUTH_TOKEN(state, token) {
@@ -23,9 +25,30 @@ export function createStore(currentToken, currentUser) {
         state.token = '';
         state.user = {};
         axios.defaults.headers.common = {};
+      },
+      ADD_FACILITIES(state, facilities) {
+        state.facilities.push = facilities;
+    },
+      CLEAR_FACILITIES(state){
+        state.facilities = [];
       }
     },
     actions: {
+      async addFacilities({ commit }, facilities){
+        commit("ADD_FACILITIES", facilities);
+      },
+      clearFacilities({ commit }) {
+        commit("CLEAR_FACILITIES");
+      }
+    },
+      async getFacilities({ commit }){
+        try {
+          const response = await FacilityService.getFacilities();
+          commit ('SET_FACILITIES', response.data);
+        } catch (error){
+        console.error('Error fetching facilities:', error);
+        }
+      },
       login({ commit }, user) {
         return axios.post('/login', user)
           .then(response => {
@@ -36,6 +59,6 @@ export function createStore(currentToken, currentUser) {
         return axios.post('/register', user);
       }
     }
-  });
+  );
   return store;
 }
