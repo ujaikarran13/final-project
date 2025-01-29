@@ -50,9 +50,10 @@
 <script>
 import LoadingSpinner from "../components/LoadingSpinner.vue";
 
+
 export default {
   components: {
-    LoadingSpinner,
+    LoadingSpinner, 
   },
   data() {
     return {

@@ -8,8 +8,9 @@
       <user-profile v-bind:user="user" />
       <h3>Facilities</h3>
       <loading-spinner v-if="isTableLoading" />
-      <table-facilities v-else  
-          v-bind:facilities="facilities" v-bind:hideUser="true"
+      <facility-table v-else  
+          v-bind:facilities="facilities" 
+          v-bind:hideUser="true"
           v-on:refresh:facilities="getFacilities" />
     </div>
   </div>
@@ -23,7 +24,7 @@ import LoadingSpinner from '../components/LoadingSpinner.vue';
 import UserProfile from '../components/UserProfile.vue';
 
 export default {
-  components: { LoadingSpinner, UserProfile },
+  components: { FacilityTable, LoadingSpinner, UserProfile },
   data() {
     return {
       isUserLoading: true,

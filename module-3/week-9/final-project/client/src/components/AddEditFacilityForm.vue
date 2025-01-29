@@ -10,14 +10,14 @@
         <form id="form-facility-add-edit" v-on:submit.prevent="submit">
           <div class="form-control">
             <label for="visibility">Visibility:</label>
-            <select id="visibility" v-model="newFacility">
+            <select id="visibility" v-model="newFacility.visibility">
               <option v-bind:value="true">Private</option>
               <option v-bind:value="true">Public</option>
             </select>
           </div>
           <div class="form-control">
             <label for="name">Facility Name:</label>
-            <input type="text" id="name" size=80 v-model="newFacility.name" required />
+            <input type="text" id="name" size=80 v-model="newFacility.facilityName" required />
           </div>
           <div class="form-control">
             <label for="address">Address:</label>
@@ -29,7 +29,7 @@
           </div>
           <div class="form-control">
             <label for="cost">Cost Per Hour:</label>
-            <input type="int" id="cost" size="80" v-model="newFacility.costPerHour" required />
+            <input type="integer" id="cost" size="80" v-model="newFacility.costPerHour" required />
           </div>
           <div class="button-group">
             <button type="submit" class="btn-primary">Save</button>
@@ -53,7 +53,7 @@
     },
   data() {
     return {
-      selectedFacilities: []
+      newFacility: {}
       }
    },
   
@@ -92,10 +92,11 @@
         
         this.newFacility = {
           visibility: false,
-          name: '',
+          facilityName: '',
           address: '',
           phoneNumber: '',
-          facilityId: []
+          costPerHour: '',
+          facilityId: ''
         }
       }
     },

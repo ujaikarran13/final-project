@@ -10,11 +10,28 @@
   </template>
   
   <script>
+
   export default {
+   
     props: ['user'],
   }
+
+
   </script>
   
   <style>
-  
+  #user-profile {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.img-profile {
+  border-radius: 50%;
+  width: 100px;
+  height: 100px;
+}
+.user-name {
+  font-weight: bold;
+  font-size: 1.2rem;
+}
   </style>

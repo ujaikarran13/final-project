@@ -63,7 +63,7 @@ public class FacilityController {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
         }
     }
-
+/**
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     @RequestMapping(path= "/facilities", method = RequestMethod.GET)
     public List<Facility> searchFacilities(@RequestParam String name) {
@@ -77,7 +77,7 @@ public class FacilityController {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
         }
     }
-
+**/
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(path ="/facilities", method = RequestMethod.POST)
     public Facility addFacilities(@RequestBody Facility facility) {

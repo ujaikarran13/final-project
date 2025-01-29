@@ -88,12 +88,15 @@ public JdbcFacilityDao(JdbcTemplate jdbcTemplate){
 
     @Override
     public Facility addFacilities(Facility facility) {
-        String sql = "INSERT INTO facilities (facility_name, address, phone_number, cost_per_hour) VALUES (?, ?, ?, ?)";
+        Facility newFacility = null;
+    String sql = "INSERT INTO facilities (facility_name, address, phone_number, cost_per_hour) VALUES (?, ?, ?, ?)" +
+            "RETURNING facility_id";
         try {
-            int rowsAffected = jdbcTemplate.update(sql, facility.getFacilityName(), facility.getAddress(),
+            int newId = jdbcTemplate.queryForObject(sql, int.class, facility.getFacilityName(), facility.getAddress(),
                     facility.getPhoneNumber(), facility.getCostPerHour());
-            if (rowsAffected > 0) {
-                return getFacilitiesByID(facility.getFacilityId());  // Return the newly added facility by ID
+
+            if (newId != 0) {
+                newFacility = getFacilitiesByID(newId);  // Return the newly added facility by ID
             } else {
                 throw new DaoException("Failed to insert the facility");
             }
@@ -102,6 +105,7 @@ public JdbcFacilityDao(JdbcTemplate jdbcTemplate){
         } catch (DataAccessException e) {
             throw new DaoException("Database access error", e);
         }
+        return newFacility;
     }
 
     @Override
