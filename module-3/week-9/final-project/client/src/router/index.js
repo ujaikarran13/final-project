@@ -6,7 +6,7 @@ import HomeView from '../views/HomeView.vue'
 import LoginView from '../views/LoginView.vue'
 import LogoutView from '../views/LogoutView.vue'
 import RegisterView from '../views/RegisterView.vue'
-import DoctorsView from '../views/DoctorsView.vue'
+import UserProfileView from '../views/UserProfileView.vue'
 import FacilityView from '../views/FacilityView.vue'
 
 /**
@@ -20,7 +20,7 @@ import FacilityView from '../views/FacilityView.vue'
 const routes = [
     {
       path: '/',
-      name: 'home',
+      name: 'HomeView',
       component: HomeView,
       meta: {
         requiresAuth: true
@@ -50,17 +50,31 @@ const routes = [
         requiresAuth: false
       } 
     },
+    // {
+    //   path: '/doctors',
+    //   name: 'doctors',
+    //   component: DoctorsView,
+    //   meta: { requiresAuth: true 
+    //   }
+    // },
     {
-      path: '/doctors',
-      name: 'doctors',
-      component: DoctorsView,
+      path: '/facilities',
+      name: 'facilities',
+      component: FacilityView,
+      meta: { requiresAuth: true 
+      }
+    },
+    {
+      path: '/facilities/:facilityId',
+      name: 'FacilityView',
+      component: FacilityView,
       meta: { requiresAuth: true 
       }
     },
     {
       path: '/facilities',
-      name: 'facilities',
-      component: FacilityView,
+      name: 'UserProfileView',
+      component: UserProfileView,
       meta: { requiresAuth: true 
       }
     }

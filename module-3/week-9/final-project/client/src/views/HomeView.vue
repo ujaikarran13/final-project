@@ -3,7 +3,7 @@
     <div id="heading-line">
       <h1>
         Home
-        <loading-spinner id="spinner" v-bind:spin="isLoading" />
+        <loading-spinner id="spinner" v-bind:spin="true" />
       </h1>
     </div>
     <h2>Loading spinner demonstration</h2>

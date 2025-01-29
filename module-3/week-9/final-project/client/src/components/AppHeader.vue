@@ -1,7 +1,7 @@
 <template>
     <header id="app-header">
         <div id="app-info">
-          <img class="app-logo" src="/img/logo_400x70.png" alt="app logo"/>
+          <img class="app-logo" src="img/calendarlogo.png" alt="calendarlogo"/>
           <h1>{{title}}</h1>
         </div>
         <div id="user-info" v-if="user.id">
@@ -31,8 +31,10 @@
     display: grid;
     grid-template-columns: 3fr 50px minmax(150px, 1fr);
     grid-template-rows: 40px;
-    background-color: rgb(136, 193, 231);
+    background-color: rgb(136, 231, 150);
     padding: 5px;
+    border: 2px solid rgb(0, 117, 41);
+    border-radius: 5px;
   }
   
   #app-info {
@@ -60,7 +62,12 @@
     margin-bottom: 0.25rem;
     font-size: 1.2rem;
   }
+  .app-logo{
   
+    align-items: flex-start;
+    height: 100px;
+    padding: 10px;
+  }
   .img-profile {
     height: 40px;
     margin-right: 1rem;

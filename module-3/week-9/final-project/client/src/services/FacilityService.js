@@ -4,22 +4,25 @@ export default {
   getFacilities(){
     return axios.get('/facilities');
   },  
-  searchFacilities(searchString){
-    return axios.get('/facilities'+ searchString);
+  getFacilitiesByID(facilityId){
+    return axios.get(`/facilities/${facilityId}`);
+  },
+  searchFacilities(name){
+    return axios.get(`/facilities/search?name=${name}`);
   },
   addFacility(facility){
     return axios.post('/facilities', facility);
   },
-  updateFacility(facilityId, facility){
-    return axios.put(`/facilities/${facilityId}`, facility);
+  updateFacility(facilityId, modifiedFacility){
+    return axios.put(`/facilities/${facilityId}`, modifiedFacility);
   },  
   deleteFacilityById(facilityId){
     return axios.delete(`/facilities/${facilityId}`);
   },
-  getPhoneNumbersForFacility(facility){
-    return axios.get(`/facilities/${facility.facilityId}/phoneNumber`);
+  getPhoneNumbersForFacility(facilityId){
+    return axios.get(`/facilities/${facilityId}/phoneNumber`);
   },
   getAllNumbers() {
-    return axios.get('')
+    return axios.get('/facilities/phoneNumber');
   }
 };

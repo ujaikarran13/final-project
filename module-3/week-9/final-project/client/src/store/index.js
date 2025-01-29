@@ -7,9 +7,14 @@ export function createStore(currentToken, currentUser) {
     state: {
       token: currentToken || '',
       user: currentUser || {},
-      facilities: []
+      facilities: [],
+      notifications: [],
     },
+   
     mutations: {
+      ADD_NOTIFICATION(state, notification){
+        state.notifications.push(notification);
+    },
       SET_AUTH_TOKEN(state, token) {
         state.token = token;
         localStorage.setItem('token', token);
