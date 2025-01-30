@@ -14,10 +14,10 @@
         <thead>
           <tr>
             <th>ID</th>
-            <th>name</th>
-            <th>address</th>
-            <th>phoneNumber</th>
-            <th>cost</th>
+            <th>Name</th>
+            <th>Address</th>
+            <th>Phone Number</th>
+            <th>Cost</th>
           </tr>
         </thead>
         <tbody>
@@ -151,5 +151,11 @@
   #facility-counts {
     font-size: 0.8rem;
     margin-bottom: 10px;
+  }
+  th, td {
+    padding: 10px;
+    text-align: left;
+    border: 1px solid #050505;
+    background-color: #add78b;
   }
   </style>
