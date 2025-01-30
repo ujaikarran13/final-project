@@ -56,11 +56,14 @@
     display: flex;
     flex-flow: column nowrap;
     justify-content: center;
+    font-style: italic;
+   
   }
   
   .user-name {
     margin-bottom: 0.25rem;
     font-size: 1.2rem;
+    font-style: oblique;
   }
   .app-logo{
   

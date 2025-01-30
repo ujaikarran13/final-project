@@ -6,7 +6,7 @@
         <loading-spinner id="spinner" v-bind:spin="true" />
       </h1>
     </div>
-    <h2>Loading spinner demonstration</h2>
+    <h2>Welcome to Scheduling</h2>
     <p>
       This is a demonstration of how you can show or hide a "spinner" icon to
       let the user know something is happening. Before calling an API, you'd set
@@ -23,15 +23,29 @@
     <p id="login-message" v-if="!isLoggedIn">
       Welcome! You may browse anonymously as much as you wish,<br />
       but you must
-      <router-link v-bind:to="{ name: 'login' }">Login</router-link> to add
-      items to your shopping cart.
+      <router-link v-bind:to="{ name: 'login' }">Login</router-link> to view
+      doctors facilities.
     </p>
-    <h2>Font-awesome demonstration</h2>
-    <p>
-      This code shows you how you can include Font-awesome icons on your page. Below are two icons:
-      one to indicate a "tile" view of products, and another to indicate a "table" view. There's also a little bit
-      of styling to get you started, but you can style it your own way. And there's a property to track which view is "active".
-    </p>
+    <section class="Info-section">
+    <h2>Accepted Insurance Providers</h2>
+    <ul class="insurance-list">
+        <li>Aetna</li>
+        <li>United Healthcare</li>
+        <li>Blue Cross Blue Shield</li>
+        <li>Medicare</li>
+        </ul>
+  </section>
+
+  <section class="Info-section">
+      <h2>Accepted Insurance Providers</h2>
+      <ul class="payment-options">
+        <li>Credit Card (We accept Mastercard and VISA)</li>
+        <li>Debit Card</li>
+        <li>Health Savings Account (HSA)</li>
+        <li>Cash</li>
+      </ul>
+    </section>
+    
     <font-awesome-icon
       v-bind:class="{ 'view-icon': true, active: cardView }"
       v-on:click="cardView = true"
@@ -44,6 +58,8 @@
       icon="fa-solid fa-table"
       title="View table"
     />
+
+    
   </div>
 </template>
 
@@ -59,6 +75,7 @@ export default {
     return {
       isLoading: false,
       cardView: true,
+      shieldView: true,
     };
   },
   computed: {
@@ -96,4 +113,38 @@ export default {
   color: blue;
   background-color: rgba(255, 255, 255, 0.7);
 }
+
+.info-section {
+  margin-bottom: 30px;
+}
+
+h2 {
+  font-size: 1.5em;
+  color: #048715;
+  margin-bottom: 10px;
+}
+
+ul li {
+  background: #f4f4f4;
+  margin: 5px 0;
+  padding: 8px;
+  border-radius: 5px;
+  font-size: 1.1em;
+}
+
+ul li:hover{
+  background-color: rgb(190, 238, 188);
+}
+
+.insurance-list li {
+ background-color: #d9f7be;
+}
+
+.payment-options li {
+background-color: #8ed0ff;
+}
+.payment-options li:hover {
+background-color: #f7f7f7;
+}
+
 </style>
