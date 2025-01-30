@@ -34,6 +34,7 @@
           <div class="button-group">
             <button type="submit" class="btn-primary">Save</button>
             <button v-on:click="close">Cancel</button>
+            <button type="button" class="btn-danger" v-on:click="deleteAction">Delete</button>
           </div>
         </form>
        </section>

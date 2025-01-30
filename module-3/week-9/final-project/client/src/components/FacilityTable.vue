@@ -22,11 +22,11 @@
         </thead>
         <tbody>
           <tr v-for="facility in facilities" v-bind:key="facility.facilityId">
-            <td>{{facility.id}}</td>
-            <td>{{facility.name}}</td>
+            <td>{{facility.facilityId}}</td>
+            <td>{{facility.facilityName}}</td>
             <td>{{facility.address}}</td>
             <td>{{facility.phoneNumber}}</td>
-            <td>{{facility.cost}}</td>
+            <td>{{facility.costPerHour}}</td>
             </tr>
         </tbody>
       </table>
@@ -146,9 +146,8 @@
   </script>
   
   <style scoped>
-  #table-facilities {
-    width: 100%;
-  }
+  
+
   #facility-counts {
     font-size: 0.8rem;
     margin-bottom: 10px;
