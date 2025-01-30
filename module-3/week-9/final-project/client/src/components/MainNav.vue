@@ -1,6 +1,6 @@
 <template>
     <nav class="nav-list" v-if="this.$store.state.user.id">
-      <div class="nav-link" ><router-link v-bind:to="{ name: 'facilities' }">Facilities</router-link></div>
+      <div class="nav-link" ><router-link v-bind:to="{ name: 'facilities' }">Doctors Offices</router-link></div>
     </nav>
   </template>
   
@@ -12,5 +12,27 @@
     background-color: rgba(136, 193, 231, 0.5);
     color: black;
     font-weight: bold;
+    text-decoration: underline;
+  }
+  .nav-link {
+    margin-right: 20px;
+    font-size: 1.1rem;
+  }
+  .nav-list {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  margin: 20px 0;
+  }
+  .nav-link a {
+  text-decoration: none; 
+  padding: 8px 12px;
+  border-radius: 5px;
+  color: #333; 
+  transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  .nav-link a:hover{
+  background-color: rgb(3, 214, 41);
+  color: #000000;
   }
   </style>
