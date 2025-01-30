@@ -78,6 +78,7 @@ public class FacilityController {
         }
     }
 **/
+
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(path ="/facilities", method = RequestMethod.POST)
     public Facility addFacilities(@RequestBody Facility facility) {
@@ -92,24 +93,25 @@ public class FacilityController {
         }
     }
 
+
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @RequestMapping(path= "/facilities/{facilityId}", method = RequestMethod.DELETE)
-    public boolean deleteFacilities(@PathVariable int facilityId) {
+    @RequestMapping(path= "/facilities/", method = RequestMethod.DELETE)
+    public void deleteFacilities(@PathVariable int facilityId) {
         try {
-            boolean isDeleted = facilityDao.deleteFacilities(facilityId);
-            if (!isDeleted) {
-                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Facility not found or unable to delete");
+            int rowsAffected = facilityDao.deleteFacilities(facilityId);
+            if (rowsAffected == 0) {
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Facility not found");
             }
-            return isDeleted;
-        } catch (Exception e) {
+        } catch (DaoException e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
         }
     }
+/**
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
-    @RequestMapping(path = "/facilities/{facilityId}/phoneNumber", method = RequestMethod.GET)
-    public String getPhoneNumberForFacility(@PathVariable int facilityId) {
+    @RequestMapping(path = "/facilities/{phoneNumber}", method = RequestMethod.GET)
+    public String getPhoneNumberForFacilityId(@PathVariable String facilityId) {
         try {
-            String phoneNumber = facilityDao.getPhoneNumberForFacility(facilityId);
+            String phoneNumber = facilityDao.getPhoneNumberForFacilityId(Integer.parseInt(facilityId)).toString();
             if (phoneNumber == null) {
                 throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Phone number not found for facility ID: " + facilityId);
             }
@@ -118,8 +120,9 @@ public class FacilityController {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
         }
     }
+ **/
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
-    @RequestMapping(path = "/facilities/phoneNumber", method = RequestMethod.GET)
+    @RequestMapping(path = "/facilities/{phoneNumber}", method = RequestMethod.GET)
     public List<String> getAllNumbers() {
         try {
             List<String> phoneNumbers = facilityDao.getAllNumbers();

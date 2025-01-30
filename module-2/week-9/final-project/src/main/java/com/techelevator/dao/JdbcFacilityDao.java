@@ -5,7 +5,6 @@ import com.techelevator.model.Facility;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.jdbc.CannotGetJdbcConnectionException;
-import org.springframework.jdbc.core.JdbcOperations;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
@@ -109,16 +108,21 @@ public JdbcFacilityDao(JdbcTemplate jdbcTemplate){
     }
 
     @Override
-    public String getPhoneNumberForFacility(int facilityId) {
+    public List<Facility> getPhoneNumberForFacilityId(int facilityId) {
+        List<Facility> phoneNumbers = new ArrayList<>();
+
         String sql = "SELECT phone_number FROM facilities WHERE facility_id = ?";
 
         try {
-            return jdbcTemplate.queryForObject(sql, new Object[]{facilityId}, String.class);
+            SqlRowSet results = jdbcTemplate.queryForRowSet(sql, facilityId);
+            while (results.next()){
+                Facility facility = mapRowToFacility(results);
+                phoneNumbers.add(facility);
+            }
         } catch (CannotGetJdbcConnectionException e) {
             throw new DaoException("Unable to connect to server or database", e);
-        } catch (DataAccessException e) {
-            throw new DaoException("Database access error", e);
         }
+        return phoneNumbers;
     }
 
     @Override
@@ -159,18 +163,19 @@ public JdbcFacilityDao(JdbcTemplate jdbcTemplate){
 
         return facility;
     }
-    @Override
-    public boolean deleteFacilities(int facilityId) {
-        String sql = "DELETE FROM facilities WHERE facility_id = ?";
 
+    public int deleteFacilities(int facilityId) {
+
+        String sql = "DELETE FROM facilities WHERE facility_id = ?";
+        int count;
         try {
-            int rowsAffected = jdbcTemplate.update(sql, facilityId);
-            return rowsAffected > 0;
+            count = jdbcTemplate.update(sql, facilityId);
         } catch (CannotGetJdbcConnectionException e) {
             throw new DaoException("Unable to connect to server or database", e);
         } catch (DataAccessException e) {
             throw new DaoException("Database access error", e);
         }
+        return count;
     }
 
     private Facility mapRowToFacility(SqlRowSet results) {

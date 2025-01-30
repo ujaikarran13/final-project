@@ -14,11 +14,11 @@ public interface  FacilityDao {
     Facility addFacilities(Facility facility);
 
 
-    String getPhoneNumberForFacility(int facilityId);
+    List<Facility> getPhoneNumberForFacilityId(int facilityId);
 
     List<String> getAllNumbers();
 
     Facility searchFacilities(String name);
 
-    boolean deleteFacilities(int facilityId);
+    int deleteFacilities(int facilityId);
 }
