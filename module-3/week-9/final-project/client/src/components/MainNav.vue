@@ -1,6 +1,8 @@
 <template>
     <nav class="nav-list" v-if="this.$store.state.user.id">
+      <div class="nav-link" ><router-link v-bind:to="{ name: 'HomeView' }">Home Page</router-link></div>
       <div class="nav-link" ><router-link v-bind:to="{ name: 'facilities' }">Doctors Offices</router-link></div>
+      
     </nav>
   </template>
   
@@ -8,14 +10,13 @@
   /* Base nav styling is found in the global.css file.
    * This adds styling for the active nav link in Vue.
    */
-  .nav-link .router-link-exact-active {
+  .router-link-exact-active {
     background-color: rgba(136, 193, 231, 0.5);
     color: black;
     font-weight: bold;
     text-decoration: underline;
   }
   .nav-link {
-    margin-right: 20px;
     font-size: 1.1rem;
   }
   .nav-list {
@@ -35,4 +36,8 @@
   background-color: rgb(3, 214, 41);
   color: #000000;
   }
+  .nav-link a.router-link-exact-active:hover {
+  background-color: rgba(136, 193, 231, 0.8); 
+ }
+  
   </style>
