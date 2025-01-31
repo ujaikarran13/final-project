@@ -7,7 +7,8 @@
         <div id="user-info" v-if="user.id">
           <div id="user-logout" >
             <div class="user-name">{{user.displayName ? user.displayName : user.username}}</div>
-            <router-link v-bind:to="{ name: 'logout' }" v-if="$store.state.token != ''">Logout</router-link>
+            <div class="login-link" ><router-link v-bind:to="{ name: 'login' }">Login</router-link></div>
+            <div class="login-link" ><router-link v-bind:to="{ name: 'logout' }">Logout</router-link></div>
           </div>
             <img v-if="user.profileImageUrl" class="img-profile" v-bind:src="user.profileImageUrl" alt="profile image" />
             <font-awesome-icon v-else class="img-profile" icon="fa-solid fa-user" />
@@ -76,4 +77,22 @@
     margin-right: 1rem;
     border-radius: 50%;
   }
+  .login-link {
+    font-size: 1.1rem;
+  }
+  .login-link a {
+  text-decoration: none; 
+  padding: 8px 12px;
+  border-radius: 5px;
+  color: #333; 
+  transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  .login-link a:hover{
+  background-color: rgb(3, 214, 41);
+  color: #000000;
+  }
+  .login-link a.router-link-exact-active:hover {
+  background-color: rgba(136, 193, 231, 0.8); 
+ }
+  
   </style>

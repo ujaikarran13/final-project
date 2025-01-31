@@ -4,6 +4,7 @@
       <div class="nav-link" ><router-link v-bind:to="{ name: 'register' }">Register View</router-link></div>
       <div class="nav-link" ><router-link v-bind:to="{ name: 'facilities' }">Facilities View</router-link></div>
       <div class="nav-link" ><router-link v-bind:to="{ name: 'UserProfileView' }">Book Appointment</router-link></div>
+      
     </nav>
   </template>
   

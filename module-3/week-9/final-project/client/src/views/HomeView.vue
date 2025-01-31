@@ -9,11 +9,10 @@
     <div class="centered-heading">
       <h2>Welcome to Scheduling</h2>
     </div>
-    <p>
+      <div style="text-align: center;">
       <img class="homepage-photo" src="img/medicaloffice.png" alt="Doctors Office Photo" />
-    </p>
-    <input type="checkbox" name="loading" id="loading" v-model="isLoading" /> Is
-    Loading
+    </div>
+    
     <p id="login-message" v-if="!isLoggedIn">
       Welcome! You may browse anonymously as much as you wish,<br />
       but you must
@@ -31,7 +30,7 @@
   </section>
 
   <section class="Info-section">
-      <h2>Accepted Insurance Providers</h2>
+      <h2>Payment Methods</h2>
       <ul class="payment-options">
         <li>Credit Card (We accept Mastercard and VISA)</li>
         <li>Debit Card</li>
@@ -144,6 +143,13 @@ background-color: #f7f7f7;
 
 .homepage-photo {
  size: 100%;
+ border: 10px solid #047387;
+ padding: 20px;
+ border-radius: 5px;
+ text-align: center;
+ margin-left: auto;
+ margin-right: auto;
+ margin-top: 20px;
 }
 
 .centered-heading {
