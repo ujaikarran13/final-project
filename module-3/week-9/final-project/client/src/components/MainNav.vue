@@ -3,7 +3,7 @@
       <div class="nav-link" ><router-link v-bind:to="{ name: 'HomeView' }">Home Page</router-link></div>
       <div class="nav-link" ><router-link v-bind:to="{ name: 'register' }">Register View</router-link></div>
       <div class="nav-link" ><router-link v-bind:to="{ name: 'facilities' }">Facilities View</router-link></div>
-      <div class="nav-link" ><router-link v-bind:to="{ name: 'UserProfileView' }">Book Appointment</router-link></div>
+      <div class="nav-link" ><router-link v-bind:to="{ name: 'UserProfileView' }">User Dashboard</router-link></div>
       
     </nav>
   </template>
@@ -29,7 +29,7 @@
   }
   .nav-link a {
   text-decoration: none; 
-  padding: 8px 12px;
+  padding: 5px 8px;
   border-radius: 5px;
   color: #333; 
   transition: background-color 0.3s ease, color 0.3s ease;
@@ -38,8 +38,6 @@
   background-color: rgb(3, 214, 41);
   color: #000000;
   }
-  .nav-link a.router-link-exact-active:hover {
-  background-color: rgba(136, 193, 231, 0.8); 
- }
+
   
   </style>

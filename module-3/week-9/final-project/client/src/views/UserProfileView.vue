@@ -1,4 +1,7 @@
 <template>
+  <header>
+    Welcome to your User Dashboard!
+  </header>
   <div id="bookAppointment">
     <form v-on:submit.prevent="register">
       <h1>Request an Appointment</h1>
@@ -93,7 +96,9 @@ h1 {
   margin-bottom: 20px;
   font-family: 'Dancing Script', cursive;
 }
-
+header {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
 #fields {
   display: flex;
   flex-direction: column;

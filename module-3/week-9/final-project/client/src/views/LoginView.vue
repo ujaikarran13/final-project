@@ -1,5 +1,9 @@
 <template>
+  <header>
+      Welcome to Scheduling, to view doctors offices, please sign in.
+    </header>
   <div id="login">
+    
     <form v-on:submit.prevent="login">
       <h1>Please Sign In</h1>
       <div id="fields">
@@ -82,6 +86,16 @@ h1 {
   text-align: center;
   margin-bottom: 20px;
   font-family: 'Dancing Script', cursive;
+}
+
+header {
+  font-size: 1.5em;
+  color: #000000;
+  text-align: center;
+  margin-bottom: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-weight: 100;
+  font-style: oblique;
 }
 
 #fields {

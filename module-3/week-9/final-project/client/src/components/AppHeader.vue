@@ -88,11 +88,9 @@
   transition: background-color 0.3s ease, color 0.3s ease;
   }
   .login-link a:hover{
-  background-color: rgb(3, 214, 41);
+  background-color: rgb(3, 214, 203);
   color: #000000;
   }
-  .login-link a.router-link-exact-active:hover {
-  background-color: rgba(136, 193, 231, 0.8); 
- }
+ 
   
   </style>

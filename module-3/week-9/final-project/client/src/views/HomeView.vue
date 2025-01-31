@@ -143,7 +143,7 @@ background-color: #f7f7f7;
 
 .homepage-photo {
  size: 100%;
- border: 10px solid #047387;
+ border: 50px solid  #8ed0ff;
  padding: 20px;
  border-radius: 5px;
  text-align: center;

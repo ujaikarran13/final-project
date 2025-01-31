@@ -50,13 +50,7 @@ const routes = [
         requiresAuth: false
       } 
     },
-    // {
-    //   path: '/doctors',
-    //   name: 'doctors',
-    //   component: DoctorsView,
-    //   meta: { requiresAuth: true 
-    //   }
-    // },
+    
     {
       path: '/facilities',
       name: 'facilities',
@@ -72,7 +66,7 @@ const routes = [
       }
     },
     {
-      path: '/bookAppointment',
+      path: '/user',
       name: 'UserProfileView',
       component: UserProfileView,
       meta: { requiresAuth: true 
