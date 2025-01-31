@@ -20,5 +20,28 @@ export default {
 
 </script>
 <style scoped>
+#app-header {
+  background-color: hsl(137, 100%, 78%);
+  color: rgb(5, 4, 4);
+  padding: 20px;
+  text-align: center;
+  font-size: 2rem;
+  font-weight: bold; 
+}
 
+#main-nav {
+  background-color:  hsl(137, 100%, 78%);
+  padding: 10px;
+}
+
+#main-content {
+  padding: 20px;
+}
+
+#app-footer {
+  background-color: hsl(137, 100%, 78%);
+  color: rgb(6, 5, 5);
+  padding: 10px;
+  text-align: center;
+}
 </style>

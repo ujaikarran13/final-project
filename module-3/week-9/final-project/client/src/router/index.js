@@ -72,7 +72,7 @@ const routes = [
       }
     },
     {
-      path: '/facilities',
+      path: '/bookAppointment',
       name: 'UserProfileView',
       component: UserProfileView,
       meta: { requiresAuth: true 

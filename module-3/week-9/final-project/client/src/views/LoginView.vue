@@ -67,5 +67,59 @@ export default {
 </script>
 
 <style scoped>
+#login {
+  max-width: 500px;
+  margin: 50px auto;
+  padding: 20px;
+  background-color: rgb(192, 245, 192);
+  border-radius: 8px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+}
 
+h1 {
+  font-size: 1.5em;
+  color: #333;
+  text-align: center;
+  margin-bottom: 20px;
+  font-family: 'Dancing Script', cursive;
+}
+
+#fields {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+label {
+  font-size: 1.1em;
+  color: #333;
+  margin-bottom: 5px;
+  font-family: 'Dancing Script', cursive;
+}
+
+input {
+  padding: 10px;
+  font-size: 1em;
+  border: 1px solid #a4cd9e;
+  border-radius: 5px;
+  margin-bottom: 15px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+button {
+  padding: 12px;
+  font-size: 1.1em;
+  font-family: 'Dancing Script', cursive;
+  background-color: #74cd80;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 100%;
+}
+
+button:hover {
+  background-color: #36c74b;
+}
 </style>

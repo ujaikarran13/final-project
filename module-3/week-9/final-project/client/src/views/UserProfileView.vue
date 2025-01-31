@@ -1,112 +1,137 @@
 <template>
-  <div>
-    <header class="view-header">
-      <h2>User Profile</h2>
-    </header>
-    <loading-spinner v-if="isUserLoading" />
-    <div v-else id="view-content">
-      <user-profile v-bind:user="user" />
-      <h3>Facilities</h3>
-      <loading-spinner v-if="isTableLoading" />
-      <facility-table v-else  
-          v-bind:facilities="facilities" 
-          v-bind:hideUser="true"
-          v-on:refresh:facilities="getFacilities" />
-    </div>
+  <div id="bookAppointment">
+    <form v-on:submit.prevent="register">
+      <h1>Request an Appointment</h1>
+      <div id="fields">
+        <label for="firstname">First Name</label>
+        <input
+          type="text"
+          id="firstname"
+          placeholder="Enter first name"
+          v-model="AppointmentRequest.firstname"
+          required
+          autofocus
+        />
+        <label for="lastname">Last Name</label>
+        <input
+          type="text"
+          id="lastname"
+          placeholder="Enter last name"
+          v-model="AppointmentRequest.lastname"
+          required
+        />
+        <label for="dob">Date Of Birth</label>
+        <input
+          type="text"
+          id="dob"
+          placeholder="Enter date of birth"
+          v-model="AppointmentRequest.dob"
+          required
+        />
+        <label for="appointment">Choose an appointment date:</label>
+        <input 
+        type="date" 
+          id="appointmentDate" 
+          v-model="AppointmentRequest.appointmentDate"
+          required />
+        <div></div>
+        <div>
+          <button type="submit">Request Appointment</button>
+        </div>
+      </div>
+      <hr />
+    </form>
   </div>
 </template>
 
 <script>
-import AuthService from '../services/AuthService';
-import FacilityService from '../services/FacilityService';
-import FacilityTable from '../components/FacilityTable.vue';
-import LoadingSpinner from '../components/LoadingSpinner.vue';
-import UserProfile from '../components/UserProfile.vue';
+import authService from "../services/AuthService";
 
 export default {
-  components: { FacilityTable, LoadingSpinner, UserProfile },
   data() {
     return {
-      isUserLoading: true,
-      isTableLoading: true,
-      userId: this.$route.params.userId,
-      facilities: [],
-      user: {}
-    }
-  },
-  created() {
-    this.getUserProfile();
-    this.getFacilities();
+      AppointmentRequest: {
+        firstname: "",
+        lastname: "",
+        dob: "",
+        appointmentDate: "",
+        role: "user",
+      },
+    };
   },
   methods: {
-    getUserProfile() {
-      this.isUserLoading=true;
-      AuthService.getUserProfile(this.userId)
-          .then(response => {
-            this.user = response.data;
-            this.isUserLoading = false;
-          })
-          .catch(error => {
-            const response = error.response;
-            if (response.status === 401) {
-              // Token expired
-              this.$store.commit("ADD_NOTIFICATION", {type: 'error', message: 'Session timeout. Please login again.'});
-              this.$store.commit("LOGOUT");
-              this.$router.push({name: "login"});
-            } else {
-              // Something else unexpected happened
-              this.isUserLoading = false;
-              let response = error.response;
-              console.error(`Could not get user profile for user id ${this.userId}.`, response.message);
-              this.$store.commit('ADD_NOTIFICATION', {type: 'error', message: 'Sorry, something unexpected occurred. Please try again later.'});
-            }
-          })
+    error(msg) {
+      alert(msg);
     },
-    getFacilities() {
-      this.isTableLoading = true;
-      FacilityService.getFacilities(this.userId)
-          .then(response => {
-            this.facilities = response.data
-            this.isTableLoading = false;
-          })
-          .catch(error => {
-            this.isTableLoading=false;
-            let response = error.response;
-            if (response.status === 401) {
-              // Token expired
-              this.$store.commit("ADD_NOTIFICATION", {type: 'error', message: 'Session timeout. Please login again.'});
-              this.$store.commit("LOGOUT");
-              this.$router.push({name: "login"});
-            } else {
-              // Something unexpected happened
-              this.$store.commit("ADD_NOTIFICATION", {type: 'error', message: 'Sorry, something unexpected occurred. Please try again later.'});
-              let response = error.response;
-              console.error(`Getting user's (id=${this.user.id}) facilities was unsuccessful: `, response.message);
-            }
-      });
-    }
-  }
-}
+    success(msg) {
+      alert(msg);
+    },
+    register() {
+     
+      console.log(this.AppointmentRequest);
+           
+    },
+  },
+};
 </script>
 
-<style>
-#user-profile {
+<style scoped>
+
+#bookAppointment {
+  max-width: 500px;
+  margin: 50px auto;
+  padding: 20px;
+  background-color: rgb(192, 245, 192);
+  border-radius: 8px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  font-size: 2em;
+  color: #333;
+  text-align: center;
+  margin-bottom: 20px;
+  font-family: 'Dancing Script', cursive;
+}
+
+#fields {
   display: flex;
-  align-items: center;
-  gap: 2rem;
-  border: 1px solid rgba(136, 193, 231, 0.7);
-  border-radius: 0.5rem;
-  margin-bottom: 2rem;
-  padding: 1.5rem;
-  max-width: 50rem;
+  flex-direction: column;
+  gap: 10px;
 }
-.user-name {
-  font-size: 1.5rem;
-  margin-bottom: 1rem;
+
+label {
+  font-size: 1.1em;
+  color: #333;
+  margin-bottom: 5px;
+  font-family: 'Dancing Script', cursive;
 }
-.img-profile {
-  font-size: 120px;
-  max-width: 120px;
-  border-radius: 50%;
+
+input {
+  padding: 10px;
+  font-size: 1em;
+  border: 1px solid #a4cd9e;
+  border-radius: 5px;
+  margin-bottom: 15px;
+  width: 100%;
+  box-sizing: border-box;
 }
+
+button {
+  padding: 12px;
+  font-size: 1.1em;
+  font-family: 'Dancing Script', cursive;
+  background-color: #74cd80;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 100%;
+}
+
+button:hover {
+  background-color: #36c74b;
+}
+
+
 </style>

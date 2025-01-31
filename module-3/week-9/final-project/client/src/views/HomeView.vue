@@ -6,17 +6,11 @@
         <loading-spinner id="spinner" v-bind:spin="true" />
       </h1>
     </div>
-    <h2>Welcome to Scheduling</h2>
+    <div class="centered-heading">
+      <h2>Welcome to Scheduling</h2>
+    </div>
     <p>
-      This is a demonstration of how you can show or hide a "spinner" icon to
-      let the user know something is happening. Before calling an API, you'd set
-      the data property <code>isLoading</code> to <code>true</code>. When the
-      call completes, set it to <code>false</code>.
-    </p>
-    <p>
-      For this demonstration, clicking the checkbox below sets
-      <code>isLoading</code> to <code>true</code>, so it simulates what the user
-      would see when your app is accessing an API.
+      <img class="homepage-photo" src="img/medicaloffice.png" alt="Doctors Office Photo" />
     </p>
     <input type="checkbox" name="loading" id="loading" v-model="isLoading" /> Is
     Loading
@@ -122,6 +116,7 @@ h2 {
   font-size: 1.5em;
   color: #048715;
   margin-bottom: 10px;
+  font-family: 'Dancing Script', cursive;
 }
 
 ul li {
@@ -145,6 +140,17 @@ background-color: #8ed0ff;
 }
 .payment-options li:hover {
 background-color: #f7f7f7;
+}
+
+.homepage-photo {
+ size: 100%;
+}
+
+.centered-heading {
+  text-align: center;
+  margin-top: 20px;
+  border: 2px solid #048715;
+  background-color: #d9f7be;
 }
 
 </style>
